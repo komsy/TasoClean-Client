@@ -60,7 +60,7 @@ class MTexts {
   static const String deleteAccMiddletext = "Are you sure you want to delete your account permanently? This action is not reversible and all of your data will be removed permanently.";
   static const String changeNameSubTitle = "Use real name for easy verification. This name will appear on several pages.";
   static const String loginTitle = "Welcome back,";
-  static const String loginSubTitle = "Discover Limitless Choices and Unmatched Convenience.";
+  static const String loginSubTitle = "The Complete Cleaning Experience: Products You Trust and Services You Need.";
   static const String signupTitle = "Let’s create your account";
   static const String forgetPasswordTitle = "Forget password";
   static const String forgetPasswordSubTitle = "Don’t worry sometimes people can forget too, enter your email and we will send you a password reset link.";
@@ -77,8 +77,8 @@ class MTexts {
   static const String popularProducts = "Popular Products";
 
   // -- Home
-  static const String homeAppbarTitle = "Good day for shopping";
-  static const String homeAppbarSubTitle = "Multitech Solutions";
+  static const String homeAppbarTitle = "Good day for cleaning";
+  static const String homeAppbarSubTitle = "TasoClean";
 
 
 }

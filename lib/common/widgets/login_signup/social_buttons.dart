@@ -30,19 +30,19 @@ class MSocialButtons extends StatelessWidget {
           ),
         ),
     
-        const SizedBox(height: MSizes.spaceBtwItems),
+        // const SizedBox(height: MSizes.spaceBtwItems),
         
-        Container(
-          decoration: BoxDecoration(border: Border.all(color: MColors.grey), borderRadius: BorderRadius.circular(100)),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Image(
-              width: MSizes.iconMd,
-              height: MSizes.iconMd,
-              image: AssetImage(MImages.facebook),
-            ),
-          ),
-        ),
+        // Container(
+        //   decoration: BoxDecoration(border: Border.all(color: MColors.grey), borderRadius: BorderRadius.circular(100)),
+        //   child: IconButton(
+        //     onPressed: () {},
+        //     icon: const Image(
+        //       width: MSizes.iconMd,
+        //       height: MSizes.iconMd,
+        //       image: AssetImage(MImages.facebook),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

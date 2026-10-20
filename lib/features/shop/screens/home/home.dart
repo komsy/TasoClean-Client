@@ -28,27 +28,26 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                    const MHomeAppBar(),                  
-                   const SizedBox(height: MSizes.spaceBtwSections),
+                   const SizedBox(height: MSizes.spaceBtwItems),
 
                   //SearchBar
-                   const MSearchContainer(text: "Search in Store"),
-                   const SizedBox(height: MSizes.spaceBtwSections),
+                   const MSearchContainer(text: "Search for Services..."),
+                   const SizedBox(height: MSizes.spaceBtwItems),
 
-                  //Categories
+                  //Products
                   Padding(
                     padding:  const EdgeInsets.only(left: MSizes.defaultSpace),
                     child: Column(
                       children: [
                         //Heading
-                         MSectionHeading(title: 'Popular Categories', textColor: Colors.white,showActionButton: false, onPressed: () {},),
+                         MSectionHeading(title: 'Popular Products', textColor: Colors.white,showActionButton: false, onPressed: () {},),
                          const SizedBox(height: MSizes.spaceBtwItems),
 
-                        //Categories
+                        //Products
                         const MHomeCategories()
                       ],
                     ),
                   ),
-
                   const SizedBox(height: MSizes.spaceBtwSections),
                 ],
               ),
@@ -59,13 +58,13 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(MSizes.defaultSpace),
               child:  Column(
                 children: [
-                  const MPromoSlider(),
-                  const SizedBox(height: MSizes.spaceBtwSections),
+                  // const MPromoSlider(),
+                  // const SizedBox(height: MSizes.spaceBtwItems),
 
                   //Heading
-                  MSectionHeading(title: 'Popular Products', 
+                  MSectionHeading(title: 'Popular Services', 
                   onPressed: () => Get.to(() =>  AllProducts(
-                    title: 'Popular Products',
+                    title: 'Popular Services',
                     // query: FirebaseFirestore.instance.collection('Products').where('IsFeatured',isEqualTo: true).limit(6),
                     futureMethod: controller.fetchAllFeaturedProducts(),
                     )),
