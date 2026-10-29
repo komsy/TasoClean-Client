@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/device/device_utility.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/device/device_utility.dart';
 
 class MRatingProgressIndicator extends StatelessWidget {
   const MRatingProgressIndicator({
-    super.key, required this.text, required this.value,
+    super.key,
+    required this.text,
+    required this.value,
   });
 
   final String text;
   final double value;
-  
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 1, child: Text(text, style: Theme.of(context).textTheme.bodyMedium)),
+        Expanded(
+            flex: 1,
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium)),
         Expanded(
           flex: 11,
           child: SizedBox(

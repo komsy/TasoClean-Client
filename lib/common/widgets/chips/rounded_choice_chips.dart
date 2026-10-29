@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../containers/circular_container.dart';
 
@@ -31,14 +31,19 @@ class MChoiceChip extends StatelessWidget {
       child: ChoiceChip(
         // Use this function to get Colors as a Chip
         avatar: isColor
-            ? TCircularContainer(width: 50, height: 50, backgroundColor: THelperFunctions.getColor(text)!)
+            ? TCircularContainer(
+                width: 50,
+                height: 50,
+                backgroundColor: THelperFunctions.getColor(text)!)
             : null,
         selected: selected,
         onSelected: onSelected,
         backgroundColor: THelperFunctions.getColor(text),
         labelStyle: TextStyle(color: selected ? MColors.white : null),
         shape: isColor ? const CircleBorder() : null,
-        label: THelperFunctions.getColor(text) == null ? Text(text) : const SizedBox(),
+        label: THelperFunctions.getColor(text) == null
+            ? Text(text)
+            : const SizedBox(),
         padding: isColor ? const EdgeInsets.all(0) : null,
         labelPadding: isColor ? const EdgeInsets.all(0) : null,
       ),

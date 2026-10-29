@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/features/personalization/controllers/user_controllers.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/features/personalization/controllers/user_controllers.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../../../utils/validators/validation.dart';
@@ -56,7 +56,9 @@ class ReAuthenticateUserLoginForm extends StatelessWidget {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                        onPressed: () =>controller.reAuthenticateEmailAndPasswordUser(), child: const Text(MTexts.verify))),
+                        onPressed: () =>
+                            controller.reAuthenticateEmailAndPasswordUser(),
+                        child: const Text(MTexts.verify))),
               ],
             ),
           ),

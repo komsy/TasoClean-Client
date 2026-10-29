@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/common/widgets/appbar/appbar.dart';
-import 'package:k_store/common/widgets/loaders/animation_loader.dart';
-import 'package:k_store/features/shop/controllers/products/cart_controller.dart';
-import 'package:k_store/features/shop/screens/checkout/checkout.dart';
-import 'package:k_store/navigation_menu.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/common/widgets/appbar/appbar.dart';
+import 'package:tasoclean/common/widgets/loaders/animation_loader.dart';
+import 'package:tasoclean/features/shop/controllers/products/cart_controller.dart';
+import 'package:tasoclean/features/shop/screens/checkout/checkout.dart';
+import 'package:tasoclean/navigation_menu.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 import '../../../../utils/constants/text_strings.dart';
 import 'widgets/cart_items.dart';
@@ -45,11 +45,11 @@ class CartScreen extends StatelessWidget {
       }),
 
       //Checkout Button
-      bottomNavigationBar: 
-      // controller.cartItems.isEmpty 
-      // ? const SizedBox()
-      // : 
-      Padding(
+      bottomNavigationBar:
+          // controller.cartItems.isEmpty
+          // ? const SizedBox()
+          // :
+          Padding(
         padding: const EdgeInsets.all(MSizes.defaultSpace),
         child: ElevatedButton(
             onPressed: () => Get.to(() => const CheckoutScreen()),

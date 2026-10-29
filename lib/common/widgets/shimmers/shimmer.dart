@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../utils/helpers/helper_functions.dart';

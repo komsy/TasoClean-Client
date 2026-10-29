@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/features/authentication/controllers/onboarding/onboarding_controller.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/device/device_utility.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/features/authentication/controllers/onboarding/onboarding_controller.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/device/device_utility.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class OnBoardingNextButton extends StatelessWidget {
   const OnBoardingNextButton({
@@ -19,12 +19,12 @@ class OnBoardingNextButton extends StatelessWidget {
       right: MSizes.defaultSpace,
       bottom: MDeviceUtils.getBottomNavigationBarHeight(),
       child: ElevatedButton(
-        onPressed: ()  =>OnBoardingController.instance.nextPage(),
+        onPressed: () => OnBoardingController.instance.nextPage(),
         style: ElevatedButton.styleFrom(
-          shape:  const CircleBorder(), 
-          backgroundColor: dark ? MColors.primary : Colors.black),
+            shape: const CircleBorder(),
+            backgroundColor: dark ? MColors.primary : Colors.black),
         child: const Icon(Iconsax.arrow_right_3),
-        ),
+      ),
     );
   }
 }

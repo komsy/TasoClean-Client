@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/features/authentication/controllers/forget_password/forget_password_controller.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/constants/text_strings.dart';
+import 'package:tasoclean/features/authentication/controllers/forget_password/forget_password_controller.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/text_strings.dart';
 
 import '../../../../utils/validators/validation.dart';
 
@@ -22,14 +22,14 @@ class ForgetPassword extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Headings
-                Text(MTexts.forgetPasswordTitle,
-                    style:Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center),
-                const SizedBox(height: MSizes.spaceBtwItems),
-                Text(MTexts.forgetPasswordSubTitle,
-                    style: Theme.of(context).textTheme.labelMedium,
-                    textAlign: TextAlign.center),
-                const SizedBox(height: MSizes.spaceBtwSections * 2),
+            Text(MTexts.forgetPasswordTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center),
+            const SizedBox(height: MSizes.spaceBtwItems),
+            Text(MTexts.forgetPasswordSubTitle,
+                style: Theme.of(context).textTheme.labelMedium,
+                textAlign: TextAlign.center),
+            const SizedBox(height: MSizes.spaceBtwSections * 2),
 
             //Texctfield
             Form(
@@ -45,7 +45,11 @@ class ForgetPassword extends StatelessWidget {
             const SizedBox(height: MSizes.spaceBtwSections),
 
             //Submit Button
-             SizedBox(width: double.infinity,child: ElevatedButton(onPressed: () => controller.sendPasswordResetEmail(),child: const Text(MTexts.submit))),
+            SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () => controller.sendPasswordResetEmail(),
+                    child: const Text(MTexts.submit))),
           ],
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 
 class MCircularIcon extends StatelessWidget {
@@ -41,7 +41,8 @@ class MCircularIcon extends StatelessWidget {
                 : MColors.white.withOpacity(0.9),
         borderRadius: BorderRadius.circular(100),
       ),
-      child: IconButton(onPressed: onPressed, icon: Icon(icon, color: color, size: size)),
+      child: IconButton(
+          onPressed: onPressed, icon: Icon(icon, color: color, size: size)),
     );
   }
 }

@@ -77,7 +77,7 @@ class MTexts {
   static const String popularProducts = "Popular Products";
 
   // -- Home
-  static const String homeAppbarTitle = "Good day for cleaning";
+  static const String homeAppbarTitle = "Good day for cleaning!";
   static const String homeAppbarSubTitle = "TasoClean";
 
 

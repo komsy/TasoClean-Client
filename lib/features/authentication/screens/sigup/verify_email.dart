@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/data/repositories/authentication/authentication_repository.dart';
-import 'package:k_store/features/authentication/controllers/signup/verify_email_controller.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/constants/text_strings.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/data/repositories/authentication/authentication_repository.dart';
+import 'package:tasoclean/features/authentication/controllers/signup/verify_email_controller.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/text_strings.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key, this.email});
@@ -15,7 +15,7 @@ class VerifyEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put( VerifyEmailController());
+    final controller = Get.put(VerifyEmailController());
 
     return Scaffold(
         appBar: AppBar(
@@ -56,18 +56,15 @@ class VerifyEmailScreen extends StatelessWidget {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                        onPressed: () =>controller.checkEmailVerificationStatus(),
-                        child: const Text(MTexts.mContinue)
-                      )
-                  ),
+                        onPressed: () =>
+                            controller.checkEmailVerificationStatus(),
+                        child: const Text(MTexts.mContinue))),
                 const SizedBox(height: MSizes.spaceBtwItems),
                 SizedBox(
                     width: double.infinity,
                     child: TextButton(
                         onPressed: () => controller.sendEmailVerification(),
-                        child: const Text(MTexts.resendEmail)
-                    )
-                  ),
+                        child: const Text(MTexts.resendEmail))),
               ],
             ),
           ),

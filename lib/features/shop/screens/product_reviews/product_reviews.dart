@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/common/widgets/appbar/appbar.dart';
-import 'package:k_store/features/shop/screens/product_reviews/widgets/user_review_card.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/common/widgets/appbar/appbar.dart';
+import 'package:tasoclean/features/shop/screens/product_reviews/widgets/user_review_card.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 import '../../../../common/widgets/products/ratings/ratings_indicator.dart';
 import 'widgets/rating_progress_indicator.dart';
-
 
 class ProductReviewsScreen extends StatelessWidget {
   const ProductReviewsScreen({super.key});
@@ -14,7 +13,8 @@ class ProductReviewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //AppBar
-      appBar: const MAppBar(title: Text('Reviews & Ratings'), showBackArrow: true ),
+      appBar:
+          const MAppBar(title: Text('Reviews & Ratings'), showBackArrow: true),
 
       //Body
       body: SingleChildScrollView(

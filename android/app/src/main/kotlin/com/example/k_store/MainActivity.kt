@@ -1,4 +1,4 @@
-package com.example.k_store
+package tasoclean.client
 
 import io.flutter.embedding.android.FlutterActivity
 

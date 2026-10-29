@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:k_store/utils/constants/enums.dart';
-import 'package:k_store/utils/popups/loaders.dart';
+import 'package:tasoclean/utils/constants/enums.dart';
+import 'package:tasoclean/utils/popups/loaders.dart';
 
 import '../../../../data/repositories/products/product_repository.dart';
 import '../../models/product_model.dart';
@@ -77,7 +77,6 @@ class ProductController extends GetxController {
 //   ),
 // ].obs;
 
-
   @override
   void onInit() {
     fetchFeaturedProducts();
@@ -86,7 +85,7 @@ class ProductController extends GetxController {
 
   //Fetch products
   Future<void> fetchFeaturedProducts() async {
-    try{
+    try {
       //Show loader while loading products
       isLoading.value = true;
 
@@ -95,10 +94,9 @@ class ProductController extends GetxController {
       // print(products);
       //Assign products
       featuredProducts.assignAll(products);
-
-    }catch (e) {
+    } catch (e) {
       MLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-    }finally{
+    } finally {
       //Remove Loader
       isLoading.value = false;
     }
@@ -106,16 +104,15 @@ class ProductController extends GetxController {
 
   //Fetch products
   Future<List<ProductModel>> fetchAllFeaturedProducts() async {
-    try{
+    try {
       //Fetch All products from data source(Firestore, API, etc)
       final products = await productRepository.getAllFeaturedProducts();
       return products;
-    }catch (e) {
+    } catch (e) {
       MLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
       return [];
     }
   }
-
 
   // //Get the product price or price range for variations
   // String getProductPrice (ProductModel product) {
@@ -151,7 +148,7 @@ class ProductController extends GetxController {
   //     }
   //   }
   // }
-  
+
   // Get the product price or price range for variations
   String getProductPrice(ProductModel product) {
     double smallestPrice = double.infinity;
@@ -159,13 +156,16 @@ class ProductController extends GetxController {
 
     // If no variations exist, return the simple price or sale price
     if (product.productType == ProductType.single.toString()) {
-      return (product.salePrice > 0 ? product.salePrice : product.price).toString();
+      return (product.salePrice > 0 ? product.salePrice : product.price)
+          .toString();
     } else {
-      if (product.productVariations != null && product.productVariations!.isNotEmpty) {
+      if (product.productVariations != null &&
+          product.productVariations!.isNotEmpty) {
         // Calculate the smallest and largest prices among variations
         for (var variation in product.productVariations!) {
           // Determine the price to consider (Sale price if available, otherwise regular price)
-          double priceToConsider = variation.salePrice > 0.0 ? variation.salePrice : variation.price;
+          double priceToConsider =
+              variation.salePrice > 0.0 ? variation.salePrice : variation.price;
 
           // Update smallest and largest prices
           if (priceToConsider < smallestPrice) {
@@ -177,12 +177,13 @@ class ProductController extends GetxController {
         }
       } else {
         // Return the base price if no variations exist
-        return (product.salePrice > 0 ? product.salePrice : product.price).toString();
+        return (product.salePrice > 0 ? product.salePrice : product.price)
+            .toString();
       }
 
       // If smallest and largest prices are approximately the same, return a single price
       if ((smallestPrice - largestPrice).abs() < 0.01) {
-        return '\$$largestPrice';  // Return single price
+        return '\$$largestPrice'; // Return single price
       } else {
         // Otherwise, return a price range
         return '\$$smallestPrice - \$$largestPrice';
@@ -190,11 +191,10 @@ class ProductController extends GetxController {
     }
   }
 
-
   //Calculate discount percentage
   String? calaculateSalePercentage(double originalPrice, double? salePrice) {
-    if(salePrice == null || salePrice <= 0.0) return null;
-    if(originalPrice <= 0) return null;
+    if (salePrice == null || salePrice <= 0.0) return null;
+    if (originalPrice <= 0) return null;
 
     double percentage = ((originalPrice - salePrice) / originalPrice) * 100;
     return percentage.toStringAsFixed(0);

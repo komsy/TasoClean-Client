@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/common/widgets/containers/rounded_container.dart';
-import 'package:k_store/features/shop/controllers/products/checkout_controller.dart';
-import 'package:k_store/features/shop/models/payment_method_model.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/common/widgets/containers/rounded_container.dart';
+import 'package:tasoclean/features/shop/controllers/products/checkout_controller.dart';
+import 'package:tasoclean/features/shop/models/payment_method_model.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class MPaymentTile extends StatelessWidget {
   const MPaymentTile({super.key, required this.paymentMethod});
@@ -25,9 +25,12 @@ class MPaymentTile extends StatelessWidget {
       leading: MRoundedContainer(
         width: 60,
         height: 40,
-        backgroundColor: THelperFunctions.isDarkMode(context) ? MColors.light : MColors.white,
+        backgroundColor: THelperFunctions.isDarkMode(context)
+            ? MColors.light
+            : MColors.white,
         padding: const EdgeInsets.all(MSizes.md),
-        child: Image(image: AssetImage(paymentMethod.image), fit: BoxFit.contain),
+        child:
+            Image(image: AssetImage(paymentMethod.image), fit: BoxFit.contain),
       ),
       title: Text(paymentMethod.name),
       trailing: const Icon(Iconsax.arrow_right_34),

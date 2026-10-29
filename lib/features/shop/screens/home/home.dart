@@ -1,49 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/common/widgets/custom_shapes/containers/primary_header_containers.dart';
-import 'package:k_store/common/widgets/shimmers/vertical_product_shimmer.dart';
-import 'package:k_store/common/widgets/texts/section_heading.dart';
-import 'package:k_store/features/shop/controllers/products/product_controller.dart';
-import 'package:k_store/features/shop/screens/home/widgets/home_appbar.dart';
+import 'package:tasoclean/common/widgets/custom_shapes/containers/primary_header_containers.dart';
+import 'package:tasoclean/common/widgets/shimmers/vertical_product_shimmer.dart';
+import 'package:tasoclean/common/widgets/texts/section_heading.dart';
+import 'package:tasoclean/features/shop/controllers/products/product_controller.dart';
+import 'package:tasoclean/features/shop/screens/home/widgets/home_appbar.dart';
+import 'package:tasoclean/features/shop/screens/home/widgets/home_promotional_sections.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
 
-import '../../../../common/widgets/containers/search_container.dart';
-import '../../../../common/widgets/layouts/grid_layout.dart';
-import '../../../../common/widgets/products/product_cards/product_card_vertical.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../all_products/all_products.dart';
 import 'widgets/home_categories.dart';
-import 'widgets/promo_slider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final controller = Get.put(ProductController());
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-           MPrimaryHeaderContainer(
+            MPrimaryHeaderContainer(
               child: Column(
                 children: [
-                   const MHomeAppBar(),                  
-                   const SizedBox(height: MSizes.spaceBtwItems),
+                  const MHomeAppBar(),
+                  const SizedBox(height: MSizes.spaceBtwItems),
 
                   //SearchBar
-                   const MSearchContainer(text: "Search for Services..."),
-                   const SizedBox(height: MSizes.spaceBtwItems),
+                  // const MSearchContainer(text: "Search for Services..."),
+                  // const SizedBox(height: MSizes.spaceBtwItems),
 
-                  //Products
+                  //Services
                   Padding(
-                    padding:  const EdgeInsets.only(left: MSizes.defaultSpace),
+                    padding: const EdgeInsets.only(left: MSizes.defaultSpace),
                     child: Column(
                       children: [
                         //Heading
-                         MSectionHeading(title: 'Popular Products', textColor: Colors.white,showActionButton: false, onPressed: () {},),
-                         const SizedBox(height: MSizes.spaceBtwItems),
+                        MSectionHeading(
+                          title: 'Popular Services',
+                          textColor: Colors.white,
+                          showActionButton: false,
+                          onPressed: () {},
+                        ),
+                        const SizedBox(height: MSizes.spaceBtwItems),
 
-                        //Products
+                        //Services
                         const MHomeCategories()
                       ],
                     ),
@@ -53,39 +55,50 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            //Body
-             Padding(
-              padding: const EdgeInsets.all(MSizes.defaultSpace),
-              child:  Column(
-                children: [
-                  // const MPromoSlider(),
-                  // const SizedBox(height: MSizes.spaceBtwItems),
-
-                  //Heading
-                  MSectionHeading(title: 'Popular Services', 
-                  onPressed: () => Get.to(() =>  AllProducts(
-                    title: 'Popular Services',
-                    // query: FirebaseFirestore.instance.collection('Products').where('IsFeatured',isEqualTo: true).limit(6),
-                    futureMethod: controller.fetchAllFeaturedProducts(),
-                    )),
+            //Body              
+            Transform.translate(
+                offset: const Offset(0, -25,), // Shift content 10 pixels upward
+                  child: Padding(
+                    padding: const EdgeInsets.all(MSizes.defaultSpace),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const MBookNowCard(
+                          title: 'Book a Service',
+                          description: 'Get trusted professionals at your doorstep.',
+                          buttonText: 'Book Now',
+                          image: MImages.productImage34,
+                        ),
+                        const SizedBox(height: MSizes.defaultSpace/1.5),
+                        MHomeSpecialOffers(
+                          offers: const [
+                            MSpecialOffer(
+                              title: 'Deep Home Cleaning',
+                              subtitle: 'From KES 4,500',
+                              buttonText: 'Book Now',
+                              image: MImages.productImage34,
+                            ),
+                            MSpecialOffer(
+                              title: 'Kitchen Cleaning',
+                              subtitle: 'From KES 2,500',
+                              buttonText: 'Book Now',
+                              image: MImages.productImage36,
+                            ),
+                            MSpecialOffer(
+                              title: 'Bedroom Cleaning',
+                              subtitle: 'From KES 3,000',
+                              buttonText: 'Book Now',
+                              image: MImages.productImage32,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: MSizes.defaultSpace/2),
+                        const MWhyChooseUs(),
+                        const SizedBox(height: MSizes.spaceBtwSections/2),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: MSizes.spaceBtwItems),
-                  
-                  //Popular Products 
-                  Obx((){
-                    if(controller.isLoading.value) return const MVerticalProductShimmer();
-
-                    if(controller.featuredProducts.isEmpty){
-                      return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
-                    }
-                    return MGridLayout(
-                      itemCount: controller.featuredProducts.length,
-                      itemBuilder: (_,index) =>  MProductCardVertical(product: controller.featuredProducts[index]),
-                    );
-                   })
-                ],
-              ),
-            )
+            ),
           ],
         ),
       ),

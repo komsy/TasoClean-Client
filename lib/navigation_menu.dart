@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/features/personalization/views/settings/settings.dart';
-import 'package:k_store/features/shop/screens/home/home.dart';
-import 'package:k_store/features/shop/screens/store/store.dart';
-import 'package:k_store/features/shop/screens/wishlist/wishlist.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/features/personalization/views/settings/settings.dart';
+import 'package:tasoclean/features/shop/screens/home/home.dart';
+import 'package:tasoclean/features/shop/screens/store/store.dart';
+import 'package:tasoclean/features/shop/screens/wishlist/wishlist.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -24,11 +24,12 @@ class NavigationMenu extends StatelessWidget {
             selectedIndex: controller.selectedIndex.value,
             onDestinationSelected: (index) => controller.selectedIndex.value =index,
             backgroundColor: darkmode ? MColors.black: Colors.white,
-            indicatorColor: darkmode ? MColors.white.withOpacity(0.1): MColors.black.withOpacity(0.1),
+            indicatorColor: darkmode ? MColors.white.withValues(alpha: 0.1): MColors.black.withValues(alpha: 0.1),
 
             destinations: const  [
               NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
               NavigationDestination(icon: Icon(Iconsax.shop), label: 'Store'),
+              NavigationDestination(icon: Icon(Iconsax.gallery), label: 'Services'),
               NavigationDestination(icon: Icon(Iconsax.document), label: 'Orders'),
               NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
             ],
@@ -44,6 +45,7 @@ class NavigationController extends GetxController {
 
   final screens= [
     const HomeScreen() ,
+    const StoreScreen(),
     const StoreScreen(),
     const FavouriteScreen(),
     const SettingsScreen()];

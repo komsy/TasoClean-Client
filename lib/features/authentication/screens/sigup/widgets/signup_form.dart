@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/common/widgets/login_signup/terms_conditions_checkbox.dart';
-import 'package:k_store/features/authentication/controllers/signup/signup_controler.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/constants/text_strings.dart';
-import 'package:k_store/utils/validators/validation.dart';
+import 'package:tasoclean/common/widgets/login_signup/terms_conditions_checkbox.dart';
+import 'package:tasoclean/features/authentication/controllers/signup/signup_controler.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/text_strings.dart';
+import 'package:tasoclean/utils/validators/validation.dart';
 
 class MSignUpForm extends StatelessWidget {
   const MSignUpForm({
@@ -92,10 +92,11 @@ class MSignUpForm extends StatelessWidget {
                     suffixIcon: IconButton(
                         onPressed: () => controller.hidePassword.value =
                             !controller.hidePassword.value,
-                        icon: Icon(controller.hidePassword.value ? Iconsax.eye_slash : Iconsax.eye)),
+                        icon: Icon(controller.hidePassword.value
+                            ? Iconsax.eye_slash
+                            : Iconsax.eye)),
                   ),
-                )
-              ),
+                )),
             const SizedBox(height: MSizes.spaceBtwSections),
 
             //Terms & Conditions CheckboxRow(

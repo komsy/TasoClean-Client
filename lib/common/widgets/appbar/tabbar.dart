@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/device/device_utility.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/utils/device/device_utility.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 import '../../../utils/constants/colors.dart';
 
@@ -14,7 +14,7 @@ class MTabBar extends StatelessWidget implements PreferredSizeWidget {
     final dark = THelperFunctions.isDarkMode(context);
 
     return Material(
-      color: dark ?  MColors.black : MColors.white,
+      color: dark ? MColors.black : MColors.white,
       child: TabBar(
         tabs: tabs,
         isScrollable: true,
@@ -24,8 +24,7 @@ class MTabBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
-  
   Size get preferredSize => Size.fromHeight(MDeviceUtils.getAppBarHeight());
 }

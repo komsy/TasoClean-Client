@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/device/device_utility.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/device/device_utility.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 import '../../../utils/constants/sizes.dart';
 
 class MSearchContainer extends StatelessWidget {
-  const MSearchContainer({
-    super.key,
-    required this.text,
-    this.icon = Iconsax.search_normal,
-    this.showBackground = true,
-    this.showBorder = true,
-    this.onTap,
-    this.padding= const EdgeInsets.symmetric(horizontal: MSizes.defaultSpace)
-  });
+  const MSearchContainer(
+      {super.key,
+      required this.text,
+      this.icon = Iconsax.search_normal,
+      this.showBackground = true,
+      this.showBorder = true,
+      this.onTap,
+      this.padding =
+          const EdgeInsets.symmetric(horizontal: MSizes.defaultSpace)});
 
   final String text;
   final IconData? icon;
-  final bool showBackground,showBorder;
+  final bool showBackground, showBorder;
   final VoidCallback? onTap;
   final EdgeInsetsGeometry padding;
-  
+
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
@@ -35,15 +35,22 @@ class MSearchContainer extends StatelessWidget {
           width: MDeviceUtils.getScreenWidth(context),
           padding: const EdgeInsets.all(MSizes.md),
           decoration: BoxDecoration(
-            color: showBackground ? dark ? MColors.dark : MColors.white : Colors.transparent,
+            color: showBackground
+                ? dark
+                    ? MColors.dark
+                    : MColors.white
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
             border: showBorder ? Border.all(color: MColors.grey) : null,
           ),
           child: Row(
             children: [
-              Icon(icon ,color: MColors.darkerGrey),
+              Icon(icon, color: MColors.darkerGrey),
               const SizedBox(width: MSizes.spaceBtwItems),
-              Text(text, style: Theme.of(context).textTheme.bodySmall,)
+              Text(
+                text,
+                style: Theme.of(context).textTheme.bodySmall,
+              )
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/common/widgets/shimmers/shimmer.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/common/widgets/shimmers/shimmer.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 class MListTileShimmer extends StatelessWidget {
   const MListTileShimmer({super.key});

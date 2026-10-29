@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/common/widgets/images/m_circular_image.dart';
+import 'package:tasoclean/common/widgets/images/m_circular_image.dart';
 
 import '../../../../../../utils/constants/enums.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 import '../icons/m_circular_icon.dart';
 import 'm_rounded_image.dart';
 

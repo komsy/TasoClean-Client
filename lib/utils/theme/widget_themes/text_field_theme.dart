@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 import '../../constants/sizes.dart';
 
 class MTextFormFieldTheme {
@@ -10,10 +10,13 @@ class MTextFormFieldTheme {
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
-    labelStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeMd, color: MColors.black),
-    hintStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeSm, color: MColors.black),
+    labelStyle: const TextStyle()
+        .copyWith(fontSize: MSizes.fontSizeMd, color: MColors.black),
+    hintStyle: const TextStyle()
+        .copyWith(fontSize: MSizes.fontSizeSm, color: MColors.black),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-    floatingLabelStyle: const TextStyle().copyWith(color: MColors.black.withOpacity(0.8)),
+    floatingLabelStyle:
+        const TextStyle().copyWith(color: MColors.black.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: MColors.grey),
@@ -22,7 +25,7 @@ class MTextFormFieldTheme {
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: MColors.grey),
     ),
-    focusedBorder:const OutlineInputBorder().copyWith(
+    focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: MColors.dark),
     ),
@@ -41,9 +44,12 @@ class MTextFormFieldTheme {
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
-    labelStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeMd, color: MColors.white),
-    hintStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeSm, color: MColors.white),
-    floatingLabelStyle: const TextStyle().copyWith(color: MColors.white.withOpacity(0.8)),
+    labelStyle: const TextStyle()
+        .copyWith(fontSize: MSizes.fontSizeMd, color: MColors.white),
+    hintStyle: const TextStyle()
+        .copyWith(fontSize: MSizes.fontSizeSm, color: MColors.white),
+    floatingLabelStyle:
+        const TextStyle().copyWith(color: MColors.white.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: MColors.darkGrey),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/common/widgets/containers/rounded_container.dart';
-import 'package:k_store/common/widgets/texts/section_heading.dart';
-import 'package:k_store/features/shop/controllers/products/checkout_controller.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/common/widgets/containers/rounded_container.dart';
+import 'package:tasoclean/common/widgets/texts/section_heading.dart';
+import 'package:tasoclean/features/shop/controllers/products/checkout_controller.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 
@@ -13,26 +13,33 @@ class MBillingPaymentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark= THelperFunctions.isDarkMode(context);
+    final dark = THelperFunctions.isDarkMode(context);
     final controller = CheckoutController.instance;
 
     return Column(
       children: [
-        MSectionHeading(title: 'Payment Method',buttonTitle: 'Change', onPressed: () => controller.selectPaymentMethod(context),),
+        MSectionHeading(
+          title: 'Payment Method',
+          buttonTitle: 'Change',
+          onPressed: () => controller.selectPaymentMethod(context),
+        ),
         const SizedBox(height: MSizes.spaceBtwItems),
-        Obx( () =>
-          Row(
+        Obx(
+          () => Row(
             children: [
               MRoundedContainer(
                 width: 60,
                 height: 35,
                 backgroundColor: dark ? MColors.light : MColors.white,
                 padding: const EdgeInsets.all(MSizes.sm),
-                child: Image(image: AssetImage(controller.selectedPaymentMethod.value.image), fit: BoxFit.contain),
+                child: Image(
+                    image: AssetImage(
+                        controller.selectedPaymentMethod.value.image),
+                    fit: BoxFit.contain),
               ),
               const SizedBox(height: MSizes.spaceBtwItems),
-              Text(controller.selectedPaymentMethod.value.name, style: Theme.of(context).textTheme.bodyLarge),
-              
+              Text(controller.selectedPaymentMethod.value.name,
+                  style: Theme.of(context).textTheme.bodyLarge),
             ],
           ),
         )

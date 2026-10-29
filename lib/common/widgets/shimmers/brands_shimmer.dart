@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/common/widgets/layouts/grid_layout.dart';
-import 'package:k_store/common/widgets/shimmers/shimmer.dart';
+import 'package:tasoclean/common/widgets/layouts/grid_layout.dart';
+import 'package:tasoclean/common/widgets/shimmers/shimmer.dart';
 
 class MBrandsShimmer extends StatelessWidget {
   const MBrandsShimmer({
@@ -13,8 +13,8 @@ class MBrandsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MGridLayout(
-      itemCount: itemCount, 
+      itemCount: itemCount,
       itemBuilder: (_, __) => const MShimmerEffect(width: 300, height: 80),
-      );
+    );
   }
 }

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/common/widgets/appbar/appbar.dart';
-import 'package:k_store/common/widgets/appbar/tabbar.dart';
-import 'package:k_store/common/widgets/containers/search_container.dart';
-import 'package:k_store/common/widgets/layouts/grid_layout.dart';
-import 'package:k_store/common/widgets/products/cart/cart_menu_icon.dart';
-import 'package:k_store/common/widgets/shimmers/brands_shimmer.dart';
-import 'package:k_store/common/widgets/texts/section_heading.dart';
-import 'package:k_store/features/shop/controllers/category_controller.dart';
-import 'package:k_store/features/shop/controllers/products/brand_controller.dart';
-import 'package:k_store/features/shop/screens/brand/all_brands.dart';
-import 'package:k_store/features/shop/screens/brand/brand_products.dart';
-import 'package:k_store/features/shop/screens/store/widgets/category.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/common/widgets/appbar/appbar.dart';
+import 'package:tasoclean/common/widgets/appbar/tabbar.dart';
+import 'package:tasoclean/common/widgets/containers/search_container.dart';
+import 'package:tasoclean/common/widgets/layouts/grid_layout.dart';
+import 'package:tasoclean/common/widgets/products/cart/cart_menu_icon.dart';
+import 'package:tasoclean/common/widgets/shimmers/brands_shimmer.dart';
+import 'package:tasoclean/common/widgets/texts/section_heading.dart';
+import 'package:tasoclean/features/shop/controllers/category_controller.dart';
+import 'package:tasoclean/features/shop/controllers/products/brand_controller.dart';
+import 'package:tasoclean/features/shop/screens/brand/all_brands.dart';
+import 'package:tasoclean/features/shop/screens/brand/brand_products.dart';
+import 'package:tasoclean/features/shop/screens/store/widgets/category.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../common/widgets/brands/brand_card.dart';
@@ -73,19 +73,32 @@ class StoreScreen extends StatelessWidget {
                           const SizedBox(height: MSizes.spaceBtwItems / 1.5),
 
                           Obx(() {
-                            if(brandController.isLoading.value) return const MBrandsShimmer();
+                            if (brandController.isLoading.value) {
+                              return const MBrandsShimmer();
+                            }
 
-                            if(brandController.featuredBrands.isEmpty){
-                              return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
+                            if (brandController.featuredBrands.isEmpty) {
+                              return Center(
+                                  child: Text('No Data Found!',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .apply(color: Colors.white)));
                             }
                             return MGridLayout(
-                              itemCount: brandController.featuredBrands.length,
-                              mainAxisExtent: 80,
-                              itemBuilder: (_, index) {
-                                //Pass each brand and onPress event
-                                final brand = brandController.featuredBrands[index];
-                                return MBrandCard(showBorder: false,brand: brand,onTap: () => Get.to(() => BrandProducts(brand: brand)));
-                            });
+                                itemCount:
+                                    brandController.featuredBrands.length,
+                                mainAxisExtent: 80,
+                                itemBuilder: (_, index) {
+                                  //Pass each brand and onPress event
+                                  final brand =
+                                      brandController.featuredBrands[index];
+                                  return MBrandCard(
+                                      showBorder: false,
+                                      brand: brand,
+                                      onTap: () => Get.to(
+                                          () => BrandProducts(brand: brand)));
+                                });
                           }),
                         ],
                       )),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:k_store/features/authentication/screens/login/login.dart';
+import 'package:tasoclean/features/authentication/screens/login/login.dart';
 
 class OnBoardingController extends GetxController {
   static OnBoardingController get instance => Get.find();
@@ -20,12 +20,11 @@ class OnBoardingController extends GetxController {
 
   //update current index & jump to next page
   void nextPage() {
-    if(currentPageIndex.value == 2){
-
+    if (currentPageIndex.value == 2) {
       //Update user opening the app first time to false
-      final storage =GetStorage();
+      final storage = GetStorage();
       storage.write('isFirstTime', false);
-      
+
       Get.offAll(const LoginScreen());
     } else {
       int page = currentPageIndex.value + 1;
@@ -38,6 +37,4 @@ class OnBoardingController extends GetxController {
     currentPageIndex.value = 2;
     pageController.jumpToPage(2);
   }
-
-
 }

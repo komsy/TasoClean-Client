@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/common/widgets/appbar/appbar.dart';
-import 'package:k_store/common/widgets/images/m_circular_image.dart';
-import 'package:k_store/common/widgets/shimmers/shimmer.dart';
-import 'package:k_store/common/widgets/texts/section_heading.dart';
-import 'package:k_store/features/personalization/views/profile/widgets/change_name.dart';
-import 'package:k_store/features/personalization/views/profile/widgets/profile_menu.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/constants/text_strings.dart';
+import 'package:tasoclean/common/widgets/appbar/appbar.dart';
+import 'package:tasoclean/common/widgets/images/m_circular_image.dart';
+import 'package:tasoclean/common/widgets/shimmers/shimmer.dart';
+import 'package:tasoclean/common/widgets/texts/section_heading.dart';
+import 'package:tasoclean/features/personalization/views/profile/widgets/change_name.dart';
+import 'package:tasoclean/features/personalization/views/profile/widgets/profile_menu.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/text_strings.dart';
 
 import '../../../../utils/constants/enums.dart';
 import '../../controllers/user_controllers.dart';
@@ -32,14 +32,22 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                 child: Column(
                   children: [
-                     Obx(() { 
+                    Obx(() {
                       final networkImage = controller.user.value.profilePicture;
-                      final image = networkImage.isNotEmpty ? networkImage :MImages.user;
+                      final image =
+                          networkImage.isNotEmpty ? networkImage : MImages.user;
                       print(image);
-                      return controller.imageUploading.value 
-                          ? const MShimmerEffect(width: 80, height: 80, radius: 80) 
-                          : MCircularImage(image: image , width: 80, height: 80, imageType: networkImage.isNotEmpty ? ImageType.network : ImageType.asset);
-                        }),
+                      return controller.imageUploading.value
+                          ? const MShimmerEffect(
+                              width: 80, height: 80, radius: 80)
+                          : MCircularImage(
+                              image: image,
+                              width: 80,
+                              height: 80,
+                              imageType: networkImage.isNotEmpty
+                                  ? ImageType.network
+                                  : ImageType.asset);
+                    }),
                     TextButton(
                         onPressed: () => controller.uploadUserProfilePicture(),
                         child: const Text(MTexts.profileSubTitle)),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/common/widgets/appbar/appbar.dart';
-import 'package:k_store/common/widgets/icons/m_circular_icon.dart';
-import 'package:k_store/common/widgets/layouts/grid_layout.dart';
-import 'package:k_store/common/widgets/loaders/animation_loader.dart';
-import 'package:k_store/common/widgets/products/product_cards/product_card_vertical.dart';
-import 'package:k_store/common/widgets/shimmers/vertical_product_shimmer.dart';
-import 'package:k_store/features/shop/controllers/products/favourites_controller.dart';
-import 'package:k_store/features/shop/screens/home/home.dart';
-import 'package:k_store/navigation_menu.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/helpers/cloud_helper_functions.dart';
+import 'package:tasoclean/common/widgets/appbar/appbar.dart';
+import 'package:tasoclean/common/widgets/icons/m_circular_icon.dart';
+import 'package:tasoclean/common/widgets/layouts/grid_layout.dart';
+import 'package:tasoclean/common/widgets/loaders/animation_loader.dart';
+import 'package:tasoclean/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:tasoclean/common/widgets/shimmers/vertical_product_shimmer.dart';
+import 'package:tasoclean/features/shop/controllers/products/favourites_controller.dart';
+import 'package:tasoclean/features/shop/screens/home/home.dart';
+import 'package:tasoclean/navigation_menu.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/helpers/cloud_helper_functions.dart';
 
 class FavouriteScreen extends StatelessWidget {
   const FavouriteScreen({super.key});
@@ -20,7 +20,7 @@ class FavouriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = FavouritesController.instance;
-   //  final controller = Get.put(FavouritesController());
+    //  final controller = Get.put(FavouritesController());
 
     return Scaffold(
       appBar: MAppBar(
@@ -33,8 +33,9 @@ class FavouriteScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.all(MSizes.defaultSpace),
-            child: Obx(() => FutureBuilder(
+          padding: const EdgeInsets.all(MSizes.defaultSpace),
+          child: Obx(
+            () => FutureBuilder(
                 future: controller.favouriteProducts(),
                 builder: (context, snapshot) {
                   //Nothing Found widget
@@ -61,11 +62,10 @@ class FavouriteScreen extends StatelessWidget {
                   return MGridLayout(
                       itemCount: products.length,
                       itemBuilder: (_, index) =>
-                          MProductCardVertical(product: products[index])
-                    );
+                          MProductCardVertical(product: products[index]));
                 }),
-            ),
           ),
+        ),
       ),
     );
   }

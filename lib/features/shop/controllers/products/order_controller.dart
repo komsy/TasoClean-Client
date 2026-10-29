@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/common/widgets/success_screen/success_screen.dart';
-import 'package:k_store/data/repositories/authentication/authentication_repository.dart';
-import 'package:k_store/data/repositories/order/order_repository.dart';
-import 'package:k_store/features/personalization/controllers/address_controller.dart';
-import 'package:k_store/features/shop/controllers/products/cart_controller.dart';
-import 'package:k_store/features/shop/controllers/products/checkout_controller.dart';
-import 'package:k_store/features/shop/models/order_model.dart';
-import 'package:k_store/navigation_menu.dart';
-import 'package:k_store/utils/constants/enums.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/popups/full_screen_loader.dart';
-import 'package:k_store/utils/popups/loaders.dart';
+import 'package:tasoclean/common/widgets/success_screen/success_screen.dart';
+import 'package:tasoclean/data/repositories/authentication/authentication_repository.dart';
+import 'package:tasoclean/data/repositories/order/order_repository.dart';
+import 'package:tasoclean/features/personalization/controllers/address_controller.dart';
+import 'package:tasoclean/features/shop/controllers/products/cart_controller.dart';
+import 'package:tasoclean/features/shop/controllers/products/checkout_controller.dart';
+import 'package:tasoclean/features/shop/models/order_model.dart';
+import 'package:tasoclean/navigation_menu.dart';
+import 'package:tasoclean/utils/constants/enums.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
+import 'package:tasoclean/utils/popups/full_screen_loader.dart';
+import 'package:tasoclean/utils/popups/loaders.dart';
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
@@ -24,7 +24,7 @@ class OrderController extends GetxController {
 
   //Fetch user's order history
   Future<List<OrderModel>> fetchUserOrders() async {
-    try{
+    try {
       final userOrders = await orderRepository.fetchUserOrders();
       return userOrders;
     } catch (e) {
@@ -34,19 +34,20 @@ class OrderController extends GetxController {
   }
 
   //Add methods for order processing
-  void processOrder(double totalAmount) async{
-    try{
+  void processOrder(double totalAmount) async {
+    try {
       //Start Loader
-      MFullScreenLoader.openLoadingDialog('Processing your order', MImages.pencilAnimation);
+      MFullScreenLoader.openLoadingDialog(
+          'Processing your order', MImages.pencilAnimation);
 
       //Get user Auth Id
       final userId = AuthenticationRepository.instance.authUser!.uid;
       if (userId.isEmpty) return;
 
       //Add Details
-      final order = OrderModel (
+      final order = OrderModel(
         //Generate a unique ID for the order
-        id: UniqueKey().toString(), 
+        id: UniqueKey().toString(),
         userId: userId,
         status: OrderStatus.pending,
         totalAmount: totalAmount,
@@ -65,12 +66,12 @@ class OrderController extends GetxController {
 
       //Show success screen
       Get.off(() => SuccessScreen(
-          image: MImages.successfulPaymentIcon,
-          title: 'Payment Success!',
-          subtitle: 'Your item will be shipped soon!',
-          onPressed: () => Get.offAll(() => const NavigationMenu()),
-        )); 
-    } catch (e) { 
+            image: MImages.successfulPaymentIcon,
+            title: 'Payment Success!',
+            subtitle: 'Your item will be shipped soon!',
+            onPressed: () => Get.offAll(() => const NavigationMenu()),
+          ));
+    } catch (e) {
       MLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:k_store/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 
 /// Widget for displaying action buttons for table rows
 class MTableActionButtons extends StatelessWidget {

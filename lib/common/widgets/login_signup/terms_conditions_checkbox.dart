@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:k_store/features/authentication/controllers/signup/signup_controler.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/sizes.dart';
-import 'package:k_store/utils/constants/text_strings.dart';
-import 'package:k_store/utils/helpers/helper_functions.dart';
+import 'package:tasoclean/features/authentication/controllers/signup/signup_controler.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/text_strings.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class MTermsAndConditionsCheckbox extends StatelessWidget {
   const MTermsAndConditionsCheckbox({
@@ -19,12 +19,12 @@ class MTermsAndConditionsCheckbox extends StatelessWidget {
       SizedBox(
           width: 24,
           height: 24,
-          child: Obx( ()=> Checkbox(
+          child: Obx(
+            () => Checkbox(
                 value: controller.privacyPolicy.value,
                 onChanged: (value) => controller.privacyPolicy.value =
                     !controller.privacyPolicy.value),
-          )
-        ),
+          )),
       const SizedBox(height: MSizes.spaceBtwItems),
       Text.rich(
         TextSpan(children: [

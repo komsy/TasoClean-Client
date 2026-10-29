@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/data/repositories/user/user_repository.dart';
-import 'package:k_store/features/personalization/controllers/user_controllers.dart';
-import 'package:k_store/features/personalization/views/profile/profile.dart';
-import 'package:k_store/utils/popups/loaders.dart';
+import 'package:tasoclean/data/repositories/user/user_repository.dart';
+import 'package:tasoclean/features/personalization/controllers/user_controllers.dart';
+import 'package:tasoclean/features/personalization/views/profile/profile.dart';
+import 'package:tasoclean/utils/popups/loaders.dart';
 
 import '../../../utils/constants/image_strings.dart';
 import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/popups/full_screen_loader.dart';
 
-class UpdateNameController extends GetxController{
+class UpdateNameController extends GetxController {
   static UpdateNameController get instance => Get.find();
 
-    //Variables
-  final firstName= TextEditingController();
-  final lastName= TextEditingController();
-  final userController = UserController.instance; //create instance of the user controller
+  //Variables
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final userController =
+      UserController.instance; //create instance of the user controller
   final userRepository = Get.put(UserRepository());
-  GlobalKey<FormState> updateUserNameFormKey = GlobalKey<FormState>();  //Form key for form validation
-  
-
+  GlobalKey<FormState> updateUserNameFormKey =
+      GlobalKey<FormState>(); //Form key for form validation
 
   @override
   void onInit() {
@@ -28,7 +28,7 @@ class UpdateNameController extends GetxController{
   }
 
   //Fetch user record and show on the fields
-  Future <void> initializeNames() async {
+  Future<void> initializeNames() async {
     firstName.text = userController.user.value.firstName;
     lastName.text = userController.user.value.lastName;
   }
@@ -36,23 +36,27 @@ class UpdateNameController extends GetxController{
   Future<void> updateUserName() async {
     try {
       //Start loading
-      MFullScreenLoader.openLoadingDialog('We are updating your information...', MImages.docerAnimation);
+      MFullScreenLoader.openLoadingDialog(
+          'We are updating your information...', MImages.docerAnimation);
 
       //Check Internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
-      if (!isConnected){
+      if (!isConnected) {
         MFullScreenLoader.stopLoading();
         return;
       }
 
       //Form validation
-      if(!updateUserNameFormKey.currentState!.validate()){
+      if (!updateUserNameFormKey.currentState!.validate()) {
         MFullScreenLoader.stopLoading();
         return;
       }
-      
+
       //Update user's first & last name in the firebase firestore
-      Map<String, dynamic> name = {'Firstname': firstName.text.trim(),'Lastname': lastName.text.trim()};
+      Map<String, dynamic> name = {
+        'Firstname': firstName.text.trim(),
+        'Lastname': lastName.text.trim()
+      };
       await userRepository.updateSingleField(name);
 
       //Update the Rx user value
@@ -63,7 +67,8 @@ class UpdateNameController extends GetxController{
       MFullScreenLoader.stopLoading();
 
       //Show success message
-      MLoaders.successSnackBar(title: 'Congratulations', message: 'Your Name has been updated.');
+      MLoaders.successSnackBar(
+          title: 'Congratulations', message: 'Your Name has been updated.');
 
       //Move to previous screen
       Get.off(() => const ProfileScreen());

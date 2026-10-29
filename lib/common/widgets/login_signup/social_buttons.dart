@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/image_strings.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 import '../../../features/authentication/controllers/login/login_controller.dart';
 
@@ -19,9 +19,11 @@ class MSocialButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          decoration: BoxDecoration(border: Border.all(color: MColors.grey), borderRadius: BorderRadius.circular(100)),
+          decoration: BoxDecoration(
+              border: Border.all(color: MColors.grey),
+              borderRadius: BorderRadius.circular(100)),
           child: IconButton(
-            onPressed: () =>controller.googleSignin(),
+            onPressed: () => controller.googleSignin(),
             icon: const Image(
               width: MSizes.iconMd,
               height: MSizes.iconMd,
@@ -29,9 +31,9 @@ class MSocialButtons extends StatelessWidget {
             ),
           ),
         ),
-    
+
         // const SizedBox(height: MSizes.spaceBtwItems),
-        
+
         // Container(
         //   decoration: BoxDecoration(border: Border.all(color: MColors.grey), borderRadius: BorderRadius.circular(100)),
         //   child: IconButton(
@@ -47,5 +49,3 @@ class MSocialButtons extends StatelessWidget {
     );
   }
 }
-
-

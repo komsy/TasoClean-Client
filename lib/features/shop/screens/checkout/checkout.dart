@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/common/widgets/containers/rounded_container.dart';
-import 'package:k_store/common/widgets/success_screen/success_screen.dart';
-import 'package:k_store/features/shop/controllers/products/cart_controller.dart';
-import 'package:k_store/features/shop/controllers/products/order_controller.dart';
-import 'package:k_store/features/shop/screens/cart/widgets/cart_items.dart';
-import 'package:k_store/features/shop/screens/checkout/widgets/billing_address_section.dart';
-import 'package:k_store/navigation_menu.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/image_strings.dart';
-import 'package:k_store/utils/helpers/pricing_calculator.dart';
-import 'package:k_store/utils/popups/loaders.dart';
+import 'package:tasoclean/common/widgets/containers/rounded_container.dart';
+import 'package:tasoclean/features/shop/controllers/products/cart_controller.dart';
+import 'package:tasoclean/features/shop/controllers/products/order_controller.dart';
+import 'package:tasoclean/features/shop/screens/cart/widgets/cart_items.dart';
+import 'package:tasoclean/features/shop/screens/checkout/widgets/billing_address_section.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/helpers/pricing_calculator.dart';
+import 'package:tasoclean/utils/popups/loaders.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/products/cart/coupon_widget.dart';
@@ -29,10 +26,13 @@ class CheckoutScreen extends StatelessWidget {
     final controller = CartController.instance;
     final subTotal = controller.totalCartPrice.value;
     final orderController = Get.put(OrderController());
-    final totalAmount = MPricingCalculator.calculateTotalPrice(subTotal,'KE');
+    final totalAmount = MPricingCalculator.calculateTotalPrice(subTotal, 'KE');
 
     return Scaffold(
-      appBar: MAppBar(title: Text('Order Review', style: Theme.of(context).textTheme.headlineSmall), showBackArrow: true),
+      appBar: MAppBar(
+          title: Text('Order Review',
+              style: Theme.of(context).textTheme.headlineSmall),
+          showBackArrow: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(MSizes.defaultSpace),
@@ -75,22 +75,23 @@ class CheckoutScreen extends StatelessWidget {
           ),
         ),
       ),
-      
+
       //Checkout Button
-      bottomNavigationBar:    Padding(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(MSizes.defaultSpace),
         child: ElevatedButton(
-              // onPressed: () => Get.to(() => SuccessScreen(
-              //   image: MImages.successfulPaymentIcon,
-              //   title: 'Payment Success!',
-              //   subtitle: 'Your item will be shipped soon!',
-              //   onPressed: () => Get.offAll(() => const NavigationMenu()),
-              // )), 
-              onPressed: subTotal > 0 
-                 ? () => orderController.processOrder(totalAmount)
-                 : () => MLoaders.warningSnackBar(title: 'Empty Cart', message:'Add items in the cart in order to procees.'),
-              child: Text('Check out ${MTexts.currency} $totalAmount')
-            ),
+            // onPressed: () => Get.to(() => SuccessScreen(
+            //   image: MImages.successfulPaymentIcon,
+            //   title: 'Payment Success!',
+            //   subtitle: 'Your item will be shipped soon!',
+            //   onPressed: () => Get.offAll(() => const NavigationMenu()),
+            // )),
+            onPressed: subTotal > 0
+                ? () => orderController.processOrder(totalAmount)
+                : () => MLoaders.warningSnackBar(
+                    title: 'Empty Cart',
+                    message: 'Add items in the cart in order to procees.'),
+            child: Text('Check out ${MTexts.currency} $totalAmount')),
       ),
     );
   }

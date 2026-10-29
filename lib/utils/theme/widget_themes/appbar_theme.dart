@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 import '../../constants/colors.dart';
 
-class MAppBarTheme{
+class MAppBarTheme {
   MAppBarTheme._();
 
   static const lightAppBarTheme = AppBarTheme(
@@ -13,7 +13,8 @@ class MAppBarTheme{
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: MColors.black, size: MSizes.iconMd),
     actionsIconTheme: IconThemeData(color: MColors.black, size: MSizes.iconMd),
-    titleTextStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: MColors.black),
+    titleTextStyle: TextStyle(
+        fontSize: 18.0, fontWeight: FontWeight.w600, color: MColors.black),
   );
   static const darMAppBarTheme = AppBarTheme(
     elevation: 0,
@@ -23,6 +24,7 @@ class MAppBarTheme{
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: MColors.black, size: MSizes.iconMd),
     actionsIconTheme: IconThemeData(color: MColors.white, size: MSizes.iconMd),
-    titleTextStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: MColors.white),
+    titleTextStyle: TextStyle(
+        fontSize: 18.0, fontWeight: FontWeight.w600, color: MColors.white),
   );
 }

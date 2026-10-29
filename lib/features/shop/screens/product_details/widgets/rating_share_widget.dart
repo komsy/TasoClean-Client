@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 class MRatingAndShare extends StatelessWidget {
   const MRatingAndShare({
@@ -14,20 +14,22 @@ class MRatingAndShare extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Iconsax.star5, color: Colors.amber,size: 24),
+            const Icon(Iconsax.star5, color: Colors.amber, size: 24),
             const SizedBox(height: MSizes.spaceBtwItems / 2),
-            Text.rich(
+            Text.rich(TextSpan(children: [
               TextSpan(
-                children: [
-                  TextSpan(text: '5.0', style: Theme.of(context).textTheme.bodyLarge),
-                  const TextSpan(text: '(199)'),
-                ]
-              )
-            )
+                  text: '5.0', style: Theme.of(context).textTheme.bodyLarge),
+              const TextSpan(text: '(199)'),
+            ]))
           ],
         ),
         //Share Button
-        IconButton(onPressed: () {}, icon: const Icon(Icons.share, size: MSizes.iconMd,))
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.share,
+              size: MSizes.iconMd,
+            ))
       ],
     );
   }

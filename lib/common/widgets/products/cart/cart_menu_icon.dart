@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/features/shop/controllers/products/cart_controller.dart';
-import 'package:k_store/features/shop/screens/cart/cart.dart';
-import 'package:k_store/utils/constants/colors.dart';
+import 'package:tasoclean/features/shop/controllers/products/cart_controller.dart';
+import 'package:tasoclean/features/shop/screens/cart/cart.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 
 class MCartCounterIcon extends StatelessWidget {
   const MCartCounterIcon({
-    super.key,required this.iconColor,
+    super.key,
+    required this.iconColor,
   });
 
   final Color? iconColor;
-  
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CartController());
-    
+
     return Stack(
       children: [
-        IconButton(onPressed: () => Get.to(() => const CartScreen()), icon: Icon(Iconsax.shopping_bag, color: iconColor)),
+        IconButton(
+            onPressed: () => Get.to(() => const CartScreen()),
+            icon: Icon(Iconsax.shopping_bag, color: iconColor)),
         Positioned(
           right: 0,
           child: Container(
@@ -26,7 +29,7 @@ class MCartCounterIcon extends StatelessWidget {
             height: 18,
             decoration: BoxDecoration(
               color: MColors.black,
-              borderRadius: BorderRadius.circular(100),  
+              borderRadius: BorderRadius.circular(100),
             ),
             child: Center(
               child: Obx(
@@ -37,10 +40,9 @@ class MCartCounterIcon extends StatelessWidget {
                         .apply(color: MColors.white, fontSizeFactor: 0.8)),
               ),
             ),
-            ),
-          )
+          ),
+        )
       ],
     );
   }
 }
-

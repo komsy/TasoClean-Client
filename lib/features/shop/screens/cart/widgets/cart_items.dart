@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:k_store/features/shop/controllers/products/cart_controller.dart';
+import 'package:tasoclean/features/shop/controllers/products/cart_controller.dart';
 
 import '../../../../../common/widgets/products/cart/add_remove_button.dart';
 import '../../../../../common/widgets/products/cart/cart_item.dart';
@@ -15,21 +15,22 @@ class MCartItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartController = CartController.instance;
-    
-    return Obx( 
-    () => ListView.separated(
+
+    return Obx(
+      () => ListView.separated(
         shrinkWrap: true,
-        separatorBuilder: (_,__) => const SizedBox(height: MSizes.spaceBtwSections), 
+        separatorBuilder: (_, __) =>
+            const SizedBox(height: MSizes.spaceBtwSections),
         itemCount: cartController.cartItems.length,
-        itemBuilder: (_, index) => Obx(
-          () { 
-            final item = cartController.cartItems[index];
-            return Column(
-              children: [
-                MCartItem(cartItem: item),
-                if(showAddRemoveButtons)const SizedBox(height: MSizes.spaceBtwItems),
-        
-                if(showAddRemoveButtons)Row(
+        itemBuilder: (_, index) => Obx(() {
+          final item = cartController.cartItems[index];
+          return Column(
+            children: [
+              MCartItem(cartItem: item),
+              if (showAddRemoveButtons)
+                const SizedBox(height: MSizes.spaceBtwItems),
+              if (showAddRemoveButtons)
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //Add Remove Qty buttons
@@ -39,19 +40,19 @@ class MCartItems extends StatelessWidget {
                         const SizedBox(width: 70),
                         //Add remove button
                         MProductQuantityWithAddRemoveButton(
-                          quantity: item.quantity, 
+                          quantity: item.quantity,
                           add: () => cartController.addOneToCart(item),
                           remove: () => cartController.removeOneToCart(item),
                         ),
                       ],
                     ),
-        
-                    MProductPriceText(price: (item.price * item.quantity).toStringAsFixed(1)),
-        
+
+                    MProductPriceText(
+                        price: (item.price * item.quantity).toStringAsFixed(1)),
                   ],
                 ),
-              ],
-            );
+            ],
+          );
         }),
       ),
     );

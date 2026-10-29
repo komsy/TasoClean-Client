@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_store/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 
 class MSettingsMenuTile extends StatelessWidget {
   const MSettingsMenuTile(
@@ -11,7 +11,7 @@ class MSettingsMenuTile extends StatelessWidget {
       this.onTap});
 
   final IconData icon;
-  final String title,subTitle;
+  final String title, subTitle;
   final Widget? trailing;
   final VoidCallback? onTap;
 
@@ -19,8 +19,8 @@ class MSettingsMenuTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon, size: 28, color: MColors.primary),
-      title: Text(title,style: Theme.of(context).textTheme.titleMedium),
-      subtitle: Text(subTitle,style: Theme.of(context).textTheme.labelMedium),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium),
+      subtitle: Text(subTitle, style: Theme.of(context).textTheme.labelMedium),
       trailing: trailing,
       onTap: onTap,
     );

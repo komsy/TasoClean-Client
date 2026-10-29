@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:k_store/utils/constants/colors.dart';
-import 'package:k_store/utils/constants/enums.dart';
-import 'package:k_store/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/enums.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
 
 import 'm_brand_tile_text.dart';
-
-
 
 class MBrandTitleTextWithVerifiedIcon extends StatelessWidget {
   const MBrandTitleTextWithVerifiedIcon({
     super.key,
     required this.title,
-    this.maxLines =1,
+    this.maxLines = 1,
     this.textColor,
     this.iconColor = MColors.primary,
     this.textAlign = TextAlign.center,
@@ -27,22 +25,21 @@ class MBrandTitleTextWithVerifiedIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Flexible(
           child: MBrandTitleText(
-            title: title,
-            color: textColor,
-            maxLines: maxLines,
-            textAlign: textAlign,
-            brandTextSize:brandTextSize,
-          )
-        ),
-        const SizedBox(height: MSizes.xs),
-        Icon(Iconsax.verify5, color:iconColor,size: MSizes.iconXs,)
-      ]
-    );
+        title: title,
+        color: textColor,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        brandTextSize: brandTextSize,
+      )),
+      const SizedBox(height: MSizes.xs),
+      Icon(
+        Iconsax.verify5,
+        color: iconColor,
+        size: MSizes.iconXs,
+      )
+    ]);
   }
 }
-

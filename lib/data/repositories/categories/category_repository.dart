@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:k_store/features/shop/models/category_model.dart';
+import 'package:tasoclean/features/shop/models/category_model.dart';
 
 import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
@@ -13,16 +13,17 @@ class CategoryRepository extends GetxController {
   //Variables
   final _db = FirebaseFirestore.instance;
 
-  //Get all categories   
+  //Get all categories
   Future<List<CategoryModel>> getAllCategories() async {
-    try{
+    try {
       final snapshot = await _db.collection('Categories').get();
-      final list = snapshot.docs.map((document) => CategoryModel.fromSnapshot(document)).toList();
+      final list = snapshot.docs
+          .map((document) => CategoryModel.fromSnapshot(document))
+          .toList();
       return list;
-
-    }on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       throw MPlatformException(e.code).message;
     } catch (e) {
       throw 'Something went wrong. Please try again';
@@ -31,46 +32,53 @@ class CategoryRepository extends GetxController {
 
   //Get Sub categories
   Future<List<CategoryModel>> getSubCategories(String categoryId) async {
-    try{
-      final snapshot = await _db.collection('Categories').where('ParentId', isEqualTo: categoryId).get();
-      final result = snapshot.docs.map((e) => CategoryModel.fromSnapshot(e)).toList();
+    try {
+      final snapshot = await _db
+          .collection('Categories')
+          .where('ParentId', isEqualTo: categoryId)
+          .get();
+      final result =
+          snapshot.docs.map((e) => CategoryModel.fromSnapshot(e)).toList();
       return result;
-
-    }on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       throw MPlatformException(e.code).message;
     } catch (e) {
       throw 'Something went wrong. Please try again';
     }
   }
+
   //Upload Categories to the cloud Firebase
-    Future<void> uploadDummydata(List<CategoryModel> categories) async {
-    try{
+  Future<void> uploadDummydata(List<CategoryModel> categories) async {
+    try {
       //Upload all the categories along with their Images
       final storage = Get.put(MFirebaseStorageService());
 
       //Loop through each category
-      for (var category in categories ) {
+      for (var category in categories) {
         //Get ImageData link from the local assets
         final file = await storage.getImageDataFromAssets(category.image);
 
         //Upload Image and Get its URL
-        final url = await storage.uploadImageData('Categories',file,category.name);
+        final url =
+            await storage.uploadImageData('Categories', file, category.name);
 
         //Assign url to category.image attribute
         category.image = url;
 
         //store category in firestore
-        await _db.collection('Categories').doc(category.id).set(category.toJson());
+        await _db
+            .collection('Categories')
+            .doc(category.id)
+            .set(category.toJson());
       }
-    }on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       throw MPlatformException(e.code).message;
     } catch (e) {
       throw 'Something went wrong. Please try again';
     }
-    }
-
+  }
 }
