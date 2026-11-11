@@ -8,8 +8,8 @@ import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
 import '../../services/cloud_storage/firebase_storage_service.dart';
 
-class ProductRepository extends GetxController {
-  static ProductRepository get instance => Get.find();
+class ProductsRepository extends GetxController {
+  static ProductsRepository get instance => Get.find();
 
   //Firestore instance for database interactions
   final _db = FirebaseFirestore.instance;

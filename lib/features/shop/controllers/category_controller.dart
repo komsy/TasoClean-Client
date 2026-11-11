@@ -63,7 +63,7 @@ class CategoryController extends GetxController {
       {required String categoryId, int limit = 4}) async {
     try {
       // Fetch limited (4) products against each subcategory
-      final products = await ProductRepository.instance
+      final products = await ProductsRepository.instance
           .getProductsForCategory(categoryId: categoryId, limit: limit);
       return products;
     } catch (e) {

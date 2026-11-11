@@ -2,6 +2,7 @@
 class MRoutes {
   static const home = '/';
   static const store = '/store';
+  static const stores = '/stores';
   static const favourites = '/favourites';
   static const settings = '/settings';
   static const subCategories = '/sub-categories';

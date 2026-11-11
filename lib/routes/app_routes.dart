@@ -13,6 +13,7 @@ import 'package:tasoclean/features/shop/screens/home/home.dart';
 import 'package:tasoclean/features/shop/screens/order/Order.dart';
 import 'package:tasoclean/features/shop/screens/product_reviews/product_reviews.dart';
 import 'package:tasoclean/features/shop/screens/store/store.dart';
+import 'package:tasoclean/features/shop/screens/store_screen.dart';
 import 'package:tasoclean/features/shop/screens/wishlist/wishlist.dart';
 import 'package:tasoclean/routes/routes.dart';
 
@@ -20,6 +21,7 @@ class AppRoutes {
   static final pages = [
     GetPage(name: MRoutes.home, page: () => const HomeScreen()),
     GetPage(name: MRoutes.store, page: () => const StoreScreen()),
+    GetPage(name: MRoutes.stores, page: () => const StoresScreen()),
     GetPage(name: MRoutes.favourites, page: () => const FavouriteScreen()),
     GetPage(name: MRoutes.settings, page: () => const SettingsScreen()),
     GetPage(

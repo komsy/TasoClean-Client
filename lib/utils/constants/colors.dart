@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class MColors {
   // App theme colors
   // static const Color primary = Color(0xFF4b68ff);
-  static const Color primary = Color(0xFF5a8fd4);
+  // static const Color primary = Color(0xFF5a8fd4);
+  static const Color primary = Color(0xFF3B6EBF);
   static const Color secondary = Color(0xFFFFE24B);
   static const Color accent = Color(0xFFb0c7ff);
 
@@ -14,7 +15,8 @@ class MColors {
 
   // Background colors
   static const Color light = Color(0xFFF6F6F6);
-  static const Color dark = Color(0xFF272727);
+  static const Color dark =
+      Color(0xFF1B1B1D); //Color(0xFF272727) Color(0xFF1B1B1D
   static const Color primaryBackground = Color(0xFFF3F5FF);
 
   // Background Container colors
@@ -45,7 +47,17 @@ class MColors {
   static const Color lightGrey = Color(0xFFF9F9F9);
   static const Color white = Color(0xFFFFFFFF);
 
+  // Custom colors
+  static const Color headerEnd = Color(0xFF5B8DD6);
+  static const Color body = Color(0xFF222222);
+  static const Color headerStart = Color(0xFF3B6EBF);
+  static const Color peach = Color(0xFFFFE4B3);
+  static const Color peachIcon = Color(0xFFAE681B);
+  static const Color peachTile = Color(0xFFFFF1CE);
+  static const Color peachSubtitle = Color(0xFF6B4A1A);
+  static const Color darkCard = Color(0xFF2A2A2D); // unselected category chip
+  static const Color darkBar = Color(0xFF232325); // bottom bar
+  static const Color stepperIdle =
+      Color(0xFFE9C98F); // minus button (peach, darker)
+  static const Color peachBorder = Color(0xFFE5484D); // selected outline
 }
-
-
-

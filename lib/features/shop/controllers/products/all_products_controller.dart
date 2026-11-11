@@ -7,7 +7,7 @@ import 'package:tasoclean/utils/popups/loaders.dart';
 class AllProductsController extends GetxController {
   static AllProductsController get instance => Get.find();
 
-  final repository = ProductRepository.instance;
+  final repository = ProductsRepository.instance;
   final RxString selectedSortOption = 'Name'.obs;
   final RxList<ProductModel> products = <ProductModel>[].obs;
 

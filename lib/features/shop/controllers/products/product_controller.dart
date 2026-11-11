@@ -10,7 +10,7 @@ class ProductController extends GetxController {
 
   //Variables
   final isLoading = false.obs;
-  final productRepository = Get.put(ProductRepository());
+  final productRepository = Get.put(ProductsRepository());
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
 //  RxList<ProductModel> featuredProducts = <ProductModel>[
 //   ProductModel(

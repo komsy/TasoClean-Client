@@ -18,8 +18,8 @@ import 'package:tasoclean/utils/helpers/helper_functions.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../common/widgets/brands/brand_card.dart';
 
-class StoreScreen extends StatelessWidget {
-  const StoreScreen({super.key});
+class StoresScreen extends StatelessWidget {
+  const StoresScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

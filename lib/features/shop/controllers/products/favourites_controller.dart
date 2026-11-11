@@ -51,7 +51,7 @@ class FavouritesController extends GetxController {
   }
 
   Future<List<ProductModel>> favouriteProducts() async {
-    return await ProductRepository.instance
+    return await ProductsRepository.instance
         .getFavouriteProducts(favourites.keys.toList());
   }
 }

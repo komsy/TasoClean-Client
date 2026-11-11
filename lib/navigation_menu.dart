@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:tasoclean/features/personalization/views/settings/settings.dart';
 import 'package:tasoclean/features/shop/screens/home/home.dart';
+import 'package:tasoclean/features/shop/screens/services/services.dart';
 import 'package:tasoclean/features/shop/screens/store/store.dart';
+import 'package:tasoclean/features/shop/screens/store_screen.dart';
 import 'package:tasoclean/features/shop/screens/wishlist/wishlist.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 import 'package:tasoclean/utils/helpers/helper_functions.dart';
@@ -28,8 +30,9 @@ class NavigationMenu extends StatelessWidget {
 
             destinations: const  [
               NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-              NavigationDestination(icon: Icon(Iconsax.shop), label: 'Store'),
               NavigationDestination(icon: Icon(Iconsax.gallery), label: 'Services'),
+              NavigationDestination(icon: Icon(Iconsax.shop), label: 'Store'),
+              NavigationDestination(icon: Icon(Iconsax.heart), label: 'Wishlist'),
               NavigationDestination(icon: Icon(Iconsax.document), label: 'Orders'),
               NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
             ],
@@ -45,8 +48,9 @@ class NavigationController extends GetxController {
 
   final screens= [
     const HomeScreen() ,
+    const ServicesScreen(),
     const StoreScreen(),
-    const StoreScreen(),
+    const StoresScreen(),
     const FavouriteScreen(),
     const SettingsScreen()];
 }

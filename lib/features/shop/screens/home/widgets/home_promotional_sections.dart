@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:tasoclean/common/widgets/texts/section_heading.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 import 'package:tasoclean/utils/constants/sizes.dart';
-import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
+/// Peach / brown pair used by the quick-service chips and the benefit cards.
+const Color _kPeach = Color(0xFFFFE4B3);
+const Color _kPeachIcon = Color(0xFFAE681B);
 
+// -----------------------------------------------------------------------------
+// Book a Service card
+// -----------------------------------------------------------------------------
+// Text now stops where the image starts, so it never runs over the photo.
+// The fade uses a transparent WHITE (not Colors.transparent, which is
+// transparent black and made the grey smudge over the sofa).
 class MBookNowCard extends StatelessWidget {
   const MBookNowCard({
     super.key,
@@ -23,9 +31,7 @@ class MBookNowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final darkmode =THelperFunctions.isDarkMode(context);
     return Container(
-      // height: 170,
       decoration: BoxDecoration(
         color: MColors.white,
         borderRadius: BorderRadius.circular(MSizes.cardRadiusSm),
@@ -41,13 +47,14 @@ class MBookNowCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(MSizes.cardRadiusSm),
         child: LayoutBuilder(
           builder: (context, constraints) {
+            final imageWidth = constraints.maxWidth * 0.40;
             return Stack(
               children: [
                 Positioned(
                   right: 0,
                   top: 0,
                   bottom: 0,
-                  width: constraints.maxWidth * 0.43,
+                  width: imageWidth,
                   child: Image.asset(
                     image,
                     fit: BoxFit.cover,
@@ -55,15 +62,21 @@ class MBookNowCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(MSizes.md),
-                  decoration: const BoxDecoration(
+                  // Right padding keeps the text clear of the image.
+                  padding: EdgeInsets.fromLTRB(
+                    MSizes.md,
+                    MSizes.md,
+                    imageWidth,
+                    MSizes.md,
+                  ),
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         MColors.white,
-                        Colors.white,
-                        Colors.transparent
+                        MColors.white,
+                        MColors.white.withValues(alpha: 0),
                       ],
-                      stops: [0, 0.5, 1],
+                      stops: const [0, 0.6, 1],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
@@ -77,17 +90,17 @@ class MBookNowCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: MColors.black.withValues(alpha:0.8),
+                              color: MColors.black.withValues(alpha: 0.8),
                               fontWeight: FontWeight.w700,
                             ),
                       ),
                       const SizedBox(height: MSizes.xs),
                       Text(
                         description,
-                        maxLines: 2,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: MColors.black.withValues(alpha:0.8),
+                              color: MColors.black.withValues(alpha: 0.8),
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -108,6 +121,108 @@ class MBookNowCard extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Quick services (replaces the hero card on Home)
+// -----------------------------------------------------------------------------
+// The hero card and the Special Offers card were the same photo with the same
+// "Book Now" button. This row gives people a different, faster way in: tap a
+// service chip. The last chip ("More") can send them to the Services tab.
+class MQuickService {
+  const MQuickService({
+    required this.icon,
+    required this.label,
+    this.onPressed,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback? onPressed;
+}
+
+class MQuickServices extends StatelessWidget {
+  const MQuickServices({
+    super.key,
+    required this.services,
+    this.title = 'Book a Service',
+    this.onMore,
+  });
+
+  final List<MQuickService> services;
+  final String title;
+
+  /// When set, a "More" chip is added at the end (e.g. open the Services tab).
+  final VoidCallback? onMore;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = [
+      ...services,
+      if (onMore != null)
+        MQuickService(
+          icon: Icons.grid_view_rounded,
+          label: 'More',
+          onPressed: onMore,
+        ),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MSectionHeading(title: title, showActionButton: false),
+        const SizedBox(height: MSizes.spaceBtwItems / 2),
+        SizedBox(
+          height: 104,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const SizedBox(width: MSizes.sm),
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return Material(
+                color: _kPeach,
+                borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
+                child: InkWell(
+                  onTap: item.onPressed,
+                  borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
+                  child: SizedBox(
+                    width: 92,
+                    child: Padding(
+                      padding: const EdgeInsets.all(MSizes.sm),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(item.icon, color: _kPeachIcon, size: 30),
+                          const SizedBox(height: MSizes.sm),
+                          Text(
+                            item.label,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                  color: MColors.black,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Special offers
+// -----------------------------------------------------------------------------
 class MSpecialOffer {
   const MSpecialOffer({
     required this.title,
@@ -154,21 +269,12 @@ class _MHomeSpecialOffersState extends State<MHomeSpecialOffers> {
                 showActionButton: false,
               ),
             ),
-            // TextButton(
-            //   onPressed: widget.onSeeAll,
-            //   child: const Row(
-            //     children: [
-            //       Text('See all'),
-            //       SizedBox(width: MSizes.xs),
-            //       Icon(Icons.arrow_forward, size: MSizes.iconSm),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
-        const SizedBox(height: MSizes.spaceBtwItems/2),
+        const SizedBox(height: MSizes.spaceBtwItems / 2),
         SizedBox(
-          height: 145,
+          // Was 145: a two-line title + subtitle + button could overflow.
+          height: 160,
           child: PageView.builder(
             itemCount: widget.offers.length,
             onPageChanged: (index) => setState(() => _currentPage = index),
@@ -252,7 +358,9 @@ class MSpecialOfferCard extends StatelessWidget {
                   colors: [
                     Color(0xF20B477C),
                     Color(0xD90B477C),
-                    Colors.transparent,
+                    // Same blue at 0 alpha, so the fade stays blue instead of
+                    // passing through grey.
+                    Color(0x000B477C),
                   ],
                   stops: [0, 0.4, 1],
                   begin: Alignment.centerLeft,
@@ -303,8 +411,25 @@ class MSpecialOfferCard extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Why choose us
+// -----------------------------------------------------------------------------
+// Cards grow with the text (large font sizes no longer overflow a fixed 112).
+// Optional trust line and contact button: pass real values, nothing is made up.
 class MWhyChooseUs extends StatelessWidget {
-  const MWhyChooseUs({super.key});
+  const MWhyChooseUs({
+    super.key,
+    this.trustLabel,
+    this.onContactPressed,
+    this.contactLabel = 'Chat with us',
+  });
+
+  /// e.g. your real rating or customer count. Hidden when null.
+  final String? trustLabel;
+
+  /// Shows an outlined contact button (e.g. open WhatsApp). Hidden when null.
+  final VoidCallback? onContactPressed;
+  final String contactLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -312,7 +437,6 @@ class MWhyChooseUs extends StatelessWidget {
       (icon: Icons.verified_user, title: 'Verified Experts'),
       (icon: Icons.star, title: 'Quality Assured'),
       (icon: Icons.event_available, title: 'Convenient Booking'),
-      // (icon: Icons.thumb_up, title: 'Great Value'),
     ];
 
     return Column(
@@ -323,50 +447,94 @@ class MWhyChooseUs extends StatelessWidget {
           showActionButton: false,
         ),
         const SizedBox(height: MSizes.spaceBtwItems),
-        Row(
-          children: [
-            for (var index = 0; index < benefits.length; index++) ...[
-              if (index > 0) const SizedBox(width: MSizes.sm),
-              Expanded(
-                child: Container(
-                  height: 112,
-                  padding: const EdgeInsets.all(MSizes.sm),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFE4B3),
-                    borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var index = 0; index < benefits.length; index++) ...[
+                if (index > 0) const SizedBox(width: MSizes.sm),
+                Expanded(
+                  child: Container(
+                    constraints: const BoxConstraints(minHeight: 112),
+                    padding: const EdgeInsets.all(MSizes.sm),
+                    decoration: BoxDecoration(
+                      color: _kPeach,
+                      borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          benefits[index].icon,
+                          color: _kPeachIcon,
+                          size: 30,
+                        ),
+                        const SizedBox(height: MSizes.sm),
+                        Text(
+                          benefits[index].title,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    color: MColors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        benefits[index].icon,
-                        color: const Color(0xFFAE681B),
-                        size: 30,
+                ),
+              ],
+            ],
+          ),
+        ),
+        if (trustLabel != null) ...[
+          const SizedBox(height: MSizes.spaceBtwItems),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star, color: _kPeach, size: 18),
+              const SizedBox(width: MSizes.xs),
+              Flexible(
+                child: Text(
+                  trustLabel!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: MColors.white.withValues(alpha: 0.85),
                       ),
-                      const SizedBox(height: MSizes.sm),
-                      Text(
-                        benefits[index].title,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: MColors.black,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ],
-          ],
-        ),
+          ),
+        ],
+        if (onContactPressed != null) ...[
+          const SizedBox(height: MSizes.spaceBtwItems),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: onContactPressed,
+              icon: const Icon(Icons.chat_bubble_outline),
+              label: Text(contactLabel),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: MColors.white,
+                minimumSize: const Size.fromHeight(48),
+                side: BorderSide(color: MColors.white.withValues(alpha: 0.4)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(MSizes.buttonRadius),
+                ),
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }
 }
 
+// -----------------------------------------------------------------------------
+// Shared red call-to-action button (now at least 44 px tall to tap)
+// -----------------------------------------------------------------------------
 class _MCallToActionButton extends StatelessWidget {
   const _MCallToActionButton({
     required this.text,
@@ -384,17 +552,20 @@ class _MCallToActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(MSizes.buttonRadius),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: MSizes.md,
-            vertical: MSizes.sm,
-          ),
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: MColors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44),
+          child: Align(
+            widthFactor: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: MSizes.md),
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: MColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            ),
           ),
         ),
       ),

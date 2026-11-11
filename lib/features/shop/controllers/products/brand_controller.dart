@@ -52,7 +52,7 @@ class BrandController extends GetxController {
   Future<List<ProductModel>> getBrandProducts(
       {required String brandId, int limit = -1}) async {
     try {
-      final products = await ProductRepository.instance
+      final products = await ProductsRepository.instance
           .getProductsForBrand(brandId: brandId, limit: limit);
       return products;
     } catch (e) {
