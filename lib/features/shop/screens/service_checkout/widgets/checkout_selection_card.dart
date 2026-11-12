@@ -5,9 +5,10 @@ import 'package:tasoclean/features/shop/screens/service_checkout/widgets/checkou
 import 'package:tasoclean/utils/constants/colors.dart';
 
 class CheckoutSelectionCard extends StatelessWidget {
-  const CheckoutSelectionCard({super.key, required this.controller});
+  const CheckoutSelectionCard({super.key, required this.controller , this.dark = false});
 
   final CheckoutController controller;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CheckoutSelectionCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
       decoration: BoxDecoration(
-        color: checkoutDarkCard,
+        color: dark ? MColors.white.withValues(alpha: 0.07) : MColors.black.withValues(alpha: 0.07),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Obx(() {
@@ -29,7 +30,7 @@ class CheckoutSelectionCard extends StatelessWidget {
                 child: Text(
                   'No services selected.',
                   style: textTheme.bodyMedium?.copyWith(
-                    color: MColors.white.withValues(alpha: 0.7),
+                    color: dark ? MColors.white.withValues(alpha: 0.7) : MColors.black.withValues(alpha: 0.7),
                   ),
                 ),
               ),
@@ -43,7 +44,7 @@ class CheckoutSelectionCard extends StatelessWidget {
                       child: Text(
                         '${line.service.name}${line.quantity > 1 ? ' x ${line.quantity}' : ''}',
                         style: textTheme.bodyMedium?.copyWith(
-                          color: MColors.white,
+                          color: dark ? MColors.white : MColors.black,
                         ),
                       ),
                     ),
@@ -51,7 +52,7 @@ class CheckoutSelectionCard extends StatelessWidget {
                     Text(
                       formatAmount(line.lineTotal),
                       style: textTheme.bodyMedium?.copyWith(
-                        color: MColors.white,
+                        color: dark ? MColors.white : MColors.black,
                       ),
                     ),
                   ],

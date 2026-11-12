@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 
 class BookingSuccessHeader extends StatelessWidget {
-  const BookingSuccessHeader({super.key, required this.paidInFull});
+  const BookingSuccessHeader({super.key, required this.paidInFull, required this.dark});
 
   final bool paidInFull;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class BookingSuccessHeader extends StatelessWidget {
           paidInFull ? 'Booking confirmed!' : 'Booking placed!',
           textAlign: TextAlign.center,
           style: textTheme.headlineSmall?.copyWith(
-            color: MColors.white,
+            color: dark ? MColors.white : MColors.black,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -58,7 +59,7 @@ class BookingSuccessHeader extends StatelessWidget {
               : 'Complete the M-Pesa prompt on your phone to lock in your slot.',
           textAlign: TextAlign.center,
           style: textTheme.bodyMedium?.copyWith(
-            color: MColors.white.withValues(alpha: 0.7),
+            color: dark ? MColors.white.withValues(alpha: 0.7) : MColors.black.withValues(alpha: 0.7),
           ),
         ),
       ],

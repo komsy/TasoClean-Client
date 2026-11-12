@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:tasoclean/common/widgets/custom_shapes/containers/primary_header_containers.dart';
 import 'package:tasoclean/common/widgets/texts/section_heading.dart';
 import 'package:tasoclean/features/shop/controllers/products/product_controller.dart';
-import 'package:tasoclean/features/shop/controllers/service_controller.dart';
 import 'package:tasoclean/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:tasoclean/features/shop/screens/home/widgets/home_promotional_sections.dart';
 import 'package:tasoclean/utils/constants/image_strings.dart';
@@ -17,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(ProductController());
-    Get.put(ServiceController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -47,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(height: MSizes.spaceBtwItems),
 
                         //Services
-                        const MHomeCategories()
+                        const MHomeCategories(),
                       ],
                     ),
                   ),
@@ -56,49 +55,53 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            //Body              
+            //Body
             Transform.translate(
-                offset: const Offset(0, -25,), // Shift content 10 pixels upward
-                  child: Padding(
-                    padding: const EdgeInsets.all(MSizes.defaultSpace),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const MBookNowCard(
-                          title: 'Book a Service',
-                          description: 'Get trusted professionals at your doorstep.',
+              offset: const Offset(
+                0,
+                -25,
+              ), // Shift content 10 pixels upward
+              child: Padding(
+                padding: const EdgeInsets.all(MSizes.defaultSpace),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const MBookNowCard(
+                      title: 'Book a Service',
+                      description:
+                          'Get trusted professionals at your doorstep.',
+                      buttonText: 'Book Now',
+                      image: MImages.productImage34,
+                    ),
+                    const SizedBox(height: MSizes.defaultSpace / 1.5),
+                    MHomeSpecialOffers(
+                      offers: const [
+                        MSpecialOffer(
+                          title: 'Deep Home Cleaning',
+                          subtitle: 'From KES 4,500',
                           buttonText: 'Book Now',
                           image: MImages.productImage34,
                         ),
-                        const SizedBox(height: MSizes.defaultSpace/1.5),
-                        MHomeSpecialOffers(
-                          offers: const [
-                            MSpecialOffer(
-                              title: 'Deep Home Cleaning',
-                              subtitle: 'From KES 4,500',
-                              buttonText: 'Book Now',
-                              image: MImages.productImage34,
-                            ),
-                            MSpecialOffer(
-                              title: 'Kitchen Cleaning',
-                              subtitle: 'From KES 2,500',
-                              buttonText: 'Book Now',
-                              image: MImages.productImage36,
-                            ),
-                            MSpecialOffer(
-                              title: 'Bedroom Cleaning',
-                              subtitle: 'From KES 3,000',
-                              buttonText: 'Book Now',
-                              image: MImages.productImage32,
-                            ),
-                          ],
+                        MSpecialOffer(
+                          title: 'Kitchen Cleaning',
+                          subtitle: 'From KES 2,500',
+                          buttonText: 'Book Now',
+                          image: MImages.productImage36,
                         ),
-                        const SizedBox(height: MSizes.defaultSpace/2),
-                        const MWhyChooseUs(),
-                        const SizedBox(height: MSizes.spaceBtwSections/2),
+                        MSpecialOffer(
+                          title: 'Bedroom Cleaning',
+                          subtitle: 'From KES 3,000',
+                          buttonText: 'Book Now',
+                          image: MImages.productImage32,
+                        ),
                       ],
                     ),
-                  ),
+                    const SizedBox(height: MSizes.defaultSpace / 2),
+                    const MWhyChooseUs(),
+                    const SizedBox(height: MSizes.spaceBtwSections / 2),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

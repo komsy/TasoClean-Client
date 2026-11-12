@@ -6,6 +6,7 @@ import 'package:tasoclean/features/shop/screens/service_checkout/widgets/booking
 import 'package:tasoclean/features/shop/screens/service_checkout/widgets/booking_suggestions.dart';
 import 'package:tasoclean/features/shop/screens/service_checkout/widgets/checkout_colors.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 export 'package:tasoclean/features/shop/screens/service_checkout/widgets/booking_suggestions.dart'
     show SuggestedProduct, sampleSuggestedProducts;
@@ -28,20 +29,23 @@ class BookingSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _goHome();
       },
       child: Scaffold(
-        backgroundColor: checkoutDark,
+        backgroundColor: dark ? MColors.black : MColors.white,
         body: SafeArea(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(20, 32, 20, 24),
             children: [
-              BookingSuccessHeader(paidInFull: _paidInFull),
+              BookingSuccessHeader(paidInFull: _paidInFull,dark: dark),
               const SizedBox(height: 24),
               BookingSuccessSummaryCard(
+                dark: dark,
                 summary: summary,
                 paidInFull: _paidInFull,
               ),
@@ -56,7 +60,7 @@ class BookingSuccessScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Container(
-          color: checkoutBar,
+          color: dark ? MColors.white.withValues(alpha: 0.27) : MColors.black.withValues(alpha: 0.27),
           child: SafeArea(
             top: false,
             child: Padding(

@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 
-class CheckoutHeader extends StatelessWidget {
-  const CheckoutHeader({super.key});
+class MStepHeader extends StatelessWidget {
+  const MStepHeader({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.currentStep,
+    this.totalSteps = 3,
+    this.onBack,
+  });
+
+  final String title;
+  final Widget subtitle;
+  final int currentStep;
+  final int totalSteps;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
     return SafeArea(
       bottom: false,
       child: Padding(
@@ -17,27 +31,31 @@ class CheckoutHeader extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => Navigator.maybePop(context),
-                  icon: const Icon(Icons.chevron_left,
-                      color: MColors.white, size: 30),
+                  onPressed: onBack ?? () => Navigator.maybePop(context),
+                  icon: const Icon(
+                    Icons.chevron_left,
+                    color: MColors.white,
+                    size: 30,
+                  ),
                 ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Schedule & pay',
+                        title,
                         style: textTheme.titleLarge?.copyWith(
                           color: MColors.white,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 2),
-                      Text(
-                        'Pick a time that suits you',
+                      DefaultTextStyle(
                         style: textTheme.bodySmall?.copyWith(
-                          color: MColors.white.withValues(alpha: 0.85),
-                        ),
+                              color: MColors.white.withValues(alpha: 0.85),
+                            ) ??
+                            const TextStyle(),
+                        child: subtitle,
                       ),
                     ],
                   ),
@@ -48,19 +66,22 @@ class CheckoutHeader extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Row(
-                children: List.generate(
-                  3,
-                  (index) => Expanded(
+                children: List.generate(totalSteps, (index) {
+                  return Expanded(
                     child: Container(
                       height: 4,
-                      margin: EdgeInsets.only(right: index == 2 ? 0 : 8),
+                      margin: EdgeInsets.only(
+                        right: index == totalSteps - 1 ? 0 : 8,
+                      ),
                       decoration: BoxDecoration(
-                        color: MColors.white,
+                        color: index < currentStep
+                            ? MColors.white
+                            : MColors.white.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ),
           ],

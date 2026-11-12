@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasoclean/features/shop/controllers/checkout_controller.dart' show formatAmount;
 import 'package:tasoclean/features/shop/screens/cart_controller.dart';
+import 'package:tasoclean/features/shop/screens/product_checkout.dart';
 import 'package:tasoclean/features/shop/screens/product_widgets.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -11,9 +15,10 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = CartsController.instance;
     final t = Theme.of(context).textTheme;
+    final dark = THelperFunctions.isDarkMode(context);
 
     return Scaffold(
-      backgroundColor: kStoreBg,
+      backgroundColor: dark ? MColors.black : MColors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -23,10 +28,10 @@ class CartScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () => Navigator.maybePop(context),
-                    icon: const Icon(Icons.chevron_left, color: Colors.white, size: 30),
+                    icon: Icon(Icons.chevron_left, color: dark ? Colors.white : Colors.black, size: 30),
                   ),
                   Text('Your cart',
-                      style: t.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+                      style: t.titleLarge?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                   const Spacer(),
                   Obx(() => cart.isEmpty
                       ? const SizedBox.shrink()
@@ -43,19 +48,22 @@ class CartScreen extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.white.withValues(alpha: 0.3)),
-                        const SizedBox(height: 12),
-                        Text('Your cart is empty', style: t.titleMedium?.copyWith(color: Colors.white70)),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () => Navigator.maybePop(context),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kStoreTan,
-                            foregroundColor: Colors.black,
+                        Icon(Icons.shopping_cart_outlined, size: 64, color: dark ? Colors.white.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.3)),
+                        const SizedBox(height: MSizes.spaceBtwSections),
+                        Text('Your cart is empty', style: t.titleMedium?.copyWith(color: dark ? Colors.white70 : Colors.black54)),
+                        const SizedBox(height: MSizes.spaceBtwSections),
+                        SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.maybePop(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: MColors.peach,
+                            foregroundColor: dark ? Colors.black : Colors.white,
                             elevation: 0,
                             shape: const StadiumBorder(),
                           ),
                           child: const Text('Browse products', style: TextStyle(fontWeight: FontWeight.w700)),
+                        ),
                         ),
                       ],
                     ),
@@ -71,9 +79,9 @@ class CartScreen extends StatelessWidget {
                     return Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: kStoreCard,
+                        color: dark ? MColors.black : MColors.white,
                         borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: kStoreBorder),
+                        border: Border.all(color: MColors.peachLine),
                       ),
                       child: Row(
                         children: [
@@ -86,12 +94,12 @@ class CartScreen extends StatelessWidget {
                                 Text(item.productName,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: t.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+                                    style: t.titleSmall?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                                 const SizedBox(height: 2),
-                                Text(item.variantLabel, style: t.bodySmall?.copyWith(color: Colors.white60)),
+                                Text(item.variantLabel, style: t.bodySmall?.copyWith(color: dark ? Colors.white60 : Colors.black54)),
                                 const SizedBox(height: 4),
                                 Text('KSh ${formatAmount(item.lineTotal)}',
-                                    style: t.bodyMedium?.copyWith(color: kStoreTan, fontWeight: FontWeight.w800)),
+                                    style: t.bodyMedium?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w800)),
                               ],
                             ),
                           ),
@@ -107,6 +115,7 @@ class CartScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 6),
                               QtyStepper(
+                                dark: dark,
                                 quantity: item.quantity,
                                 onAdd: () => cart.increment(item.key),
                                 onRemove: () => cart.decrement(item.key),
@@ -126,9 +135,9 @@ class CartScreen extends StatelessWidget {
               if (cart.isEmpty) return const SizedBox.shrink();
               return Container(
                 padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
-                decoration: const BoxDecoration(
-                  color: kStoreCard,
-                  border: Border(top: BorderSide(color: kStoreBorder)),
+                decoration: BoxDecoration(
+                  color: dark ? MColors.darkCard : MColors.white,
+                  border: const Border(top: BorderSide(color: MColors.peachLine)),
                 ),
                 child: Row(
                   children: [
@@ -138,20 +147,20 @@ class CartScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text('${cart.count} ${cart.count == 1 ? 'item' : 'items'}',
-                              style: t.bodySmall?.copyWith(color: Colors.white60)),
+                              style: t.bodySmall?.copyWith(color: dark ? Colors.white60 : Colors.black54)),
                           Text('KSh ${formatAmount(cart.total)}',
-                              style: t.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w800)),
+                              style: t.titleLarge?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w800)),
                         ],
                       ),
                     ),
                     SizedBox(
                       width: 160,
-                      height: 50,
+                      height: 52,
                       child: ElevatedButton(
                         // TODO: product checkout (delivery details + M-Pesa) isn't built yet.
-                        onPressed: () => Get.snackbar('Checkout', 'Product checkout is not wired up yet.'),
+                        onPressed: () =>Get.to(() => const ProductCheckoutScreen()),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: kStoreTan,
+                          backgroundColor: MColors.peach,
                           foregroundColor: Colors.black,
                           elevation: 0,
                           shape: const StadiumBorder(),

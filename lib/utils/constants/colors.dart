@@ -60,4 +60,5 @@ class MColors {
   static const Color stepperIdle =
       Color(0xFFE9C98F); // minus button (peach, darker)
   static const Color peachBorder = Color(0xFFE5484D); // selected outline
+  static const Color peachLine = Color(0xFFE9C98F);
 }

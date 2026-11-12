@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasoclean/common/widgets/appbar/step_header.dart';
 import 'package:tasoclean/features/shop/controllers/service_controller.dart';
 import 'package:tasoclean/features/shop/models/service_model.dart';
 import 'package:tasoclean/features/shop/screens/service_checkout/checkout.dart';
@@ -8,6 +9,8 @@ import 'package:tasoclean/features/shop/screens/services/widgets/service_bottom_
 import 'package:tasoclean/features/shop/screens/services/widgets/service_header.dart';
 import 'package:tasoclean/features/shop/screens/services/widgets/service_item_tile.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/constants/sizes.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Local palette – swap these for MColors equivalents if you have them
@@ -16,8 +19,6 @@ const primary = Color(0xFF4A78D0); // header
 const dark = Color(0xFF1B1B1D); // body background
 const darkCard = Color(0xFF2A2A2D); // unselected category chip
 const darkBar = Color(0xFF232325); // bottom bar
-const _kStepperIdle = Color(0xFFE9C98F); // minus button (peach, darker)
-const _kPeachBorder = Color(0xFFE5484D); // selected outline
 
 /// Firestore has no icon field, so pick one from the category name.
 IconData serviceCategoryIcon(String name) {
@@ -29,13 +30,6 @@ IconData serviceCategoryIcon(String name) {
   return Icons.cleaning_services_outlined;
 }
 
-String _kes(num v) {
-  final fixed = v % 1 == 0 ? v.toInt().toString() : v.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  final whole =
-      parts[0].replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
-  return 'KES ${parts.length > 1 ? '$whole.${parts[1]}' : whole}';
-}
 
 // ─────────────────────────────────────────────────────────────
 // Screen
@@ -46,7 +40,7 @@ class BookServiceScreen extends StatefulWidget {
     required this.categories,
     this.initialCategory = 0,
     this.location = 'Utawala, Nairobi',
-    this.step = 1,
+    this.step = 2,
   });
 
   /// All active categories (each holds its own `services` array).
@@ -77,30 +71,37 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
+
     return Scaffold(
       backgroundColor: primary,
       body: Column(
         children: [
-          MServiceHeader(location: widget.location, step: widget.step),
+          const MStepHeader(
+            title: 'Book a service',
+            subtitle: Text('utawala, Nairobi'),
+            currentStep: 2,
+          ),
           Expanded(
             child: Container(
               width: double.infinity,
-              decoration: const BoxDecoration(
-                color: dark,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              decoration: BoxDecoration(
+                color: dark ? MColors.black : MColors.white,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(MSizes.spaceBtwSections)),
               ),
               child: widget.categories.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Text('No services available',
-                          style: TextStyle(color: MColors.white)))
+                          style: TextStyle(color: dark ? MColors.white : MColors.black)))
                   : Obx(() {
                       final category = widget.categories[_selected];
                       final services = category.activeServices;
 
                       return Column(
                         children: [
-                          const SizedBox(height: 20),
+                          const SizedBox(height: MSizes.spaceBtwItems),
                           MCategoryStrip(
+                            dark: dark,
                             categories: widget.categories,
                             selected: _selected,
                             badgeFor: controller.badgeFor,
@@ -117,20 +118,20 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                                       .textTheme
                                       .titleMedium
                                       ?.copyWith(
-                                        color: MColors.white,
+                                        color: dark ? MColors.white : MColors.black,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: MSizes.defaultSpace / 2),
                                 if (services.isEmpty)
                                   Text('No active services in this category.',
-                                      style: TextStyle(
-                                          color: MColors.white
+                                      style: TextStyle( color: dark ? MColors.white : MColors.black
                                               .withValues(alpha: 0.7))),
                                 for (final service in services)
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
+                                    padding: const EdgeInsets.only(bottom: MSizes.spaceBtwItems/2),
                                     child: MServiceItemTile(
+                                      dark: dark,
                                       service: service,
                                       quantity: controller.quantityOf(
                                           category, service),
@@ -144,6 +145,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             ),
                           ),
                           MServiceBottomBar(
+                            dark: dark,
                             items: controller.itemCount,
                             services: controller.serviceCount,
                             total: controller.total,

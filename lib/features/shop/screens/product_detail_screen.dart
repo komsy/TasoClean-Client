@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasoclean/features/shop/controllers/checkout_controller.dart' show formatAmount;
-import 'package:tasoclean/features/shop/screens/cart/cart.dart';
+import 'package:tasoclean/features/shop/screens/cart_screen.dart';
 import 'package:tasoclean/features/shop/screens/cart_controller.dart';
 import 'package:tasoclean/features/shop/screens/product_model.dart';
 import 'package:tasoclean/features/shop/screens/product_widgets.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
+import 'package:tasoclean/utils/helpers/helper_functions.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key, required this.product});
 
   final ProductModel product;
-
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
@@ -42,9 +43,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
     final description = product.plainDescription;
+    final dark = THelperFunctions.isDarkMode(context);
 
     return Scaffold(
-      backgroundColor: kStoreBg,
+      backgroundColor: dark ? MColors.black : MColors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -54,10 +56,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   IconButton(
                     onPressed: () => Navigator.maybePop(context),
-                    icon: const Icon(Icons.chevron_left, color: Colors.white, size: 30),
+                    icon: Icon(Icons.chevron_left, color: dark ? Colors.white : Colors.black, size: 30),
                   ),
                   const Spacer(),
-                  CartBadgeButton(onTap: () => Get.to(() => const CartScreen())),
+                  CartBadgeButton(onTap: () => Get.to(() => const CartScreen()), dark: dark),
                 ],
               ),
             ),
@@ -72,23 +74,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: kStoreCard,
+                        color: dark ? MColors.black : MColors.white,
                         borderRadius: BorderRadius.circular(26),
-                        border: Border.all(color: kStoreBorder),
+                        border: Border.all(color: MColors.peachLine),
                       ),
                       child: ProductImage(url: _image),
                     ),
                     const SizedBox(height: 20),
                     Text(product.name,
-                        style: t.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+                        style: t.titleLarge?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 6),
                     Text('KSh ${formatAmount(variant.price)}',
-                        style: t.titleMedium?.copyWith(color: kStoreTan, fontWeight: FontWeight.w800)),
+                        style: t.titleMedium?.copyWith(color: dark ? MColors.white : MColors.black, fontWeight: FontWeight.w800)),
 
                     if (variants.length > 1) ...[
                       const SizedBox(height: 22),
                       Text('Choose size',
-                          style: t.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+                          style: t.titleSmall?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                       const SizedBox(height: 10),
                       Wrap(
                         spacing: 10,
@@ -101,16 +103,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 duration: const Duration(milliseconds: 150),
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                                 decoration: BoxDecoration(
-                                  color: i == _variantIndex ? kStoreTan : Colors.transparent,
+                                  color: i == _variantIndex ? MColors.peach : dark ? MColors.darkCard : MColors.black.withValues(alpha: 0.08),
                                   borderRadius: BorderRadius.circular(22),
                                   border: Border.all(
-                                    color: i == _variantIndex ? kStoreTan : Colors.white.withValues(alpha: 0.25),
+                                    color: i == _variantIndex ? MColors.peachLine : dark ? Colors.white.withValues(alpha: 0.25) : Colors.black.withValues(alpha: 0.25),
                                   ),
                                 ),
                                 child: Text(
                                   variants[i].label,
                                   style: TextStyle(
-                                    color: i == _variantIndex ? Colors.black : Colors.white,
+                                    color: i == _variantIndex ? Colors.black : dark ? Colors.white : Colors.black,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -124,9 +126,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Row(
                       children: [
                         Text('Quantity',
-                            style: t.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+                            style: t.titleSmall?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                         const Spacer(),
                         QtyStepper(
+                          dark: dark,
                           quantity: _qty,
                           onAdd: () => setState(() => _qty = (_qty + 1).clamp(1, CartsController.maxPerItem)),
                           onRemove: () => setState(() => _qty = (_qty - 1).clamp(1, CartsController.maxPerItem)),
@@ -137,10 +140,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     if (description.isNotEmpty) ...[
                       const SizedBox(height: 24),
                       Text('About this product',
-                          style: t.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+                          style: t.titleSmall?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                       const SizedBox(height: 8),
                       Text(description,
-                          style: t.bodyMedium?.copyWith(color: Colors.white70, height: 1.5)),
+                          style: t.bodyMedium?.copyWith(color: dark ? Colors.white70 : Colors.black54, height: 1.5)),
                     ],
                   ],
                 ),
@@ -150,9 +153,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             // Bottom bar
             Container(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-              decoration: const BoxDecoration(
-                color: kStoreCard,
-                border: Border(top: BorderSide(color: kStoreBorder)),
+              decoration: BoxDecoration(
+                color: dark ? MColors.darkCard : MColors.white,
+                border: const Border(top: BorderSide(color: kStoreBorder)),
               ),
               child: SizedBox(
                 width: double.infinity,
@@ -160,7 +163,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: ElevatedButton(
                   onPressed: _addToCart,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: kStoreTan,
+                    backgroundColor: MColors.peach,
                     foregroundColor: Colors.black,
                     elevation: 0,
                     shape: const StadiumBorder(),

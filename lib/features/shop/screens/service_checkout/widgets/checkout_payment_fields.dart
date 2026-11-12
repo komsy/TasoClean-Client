@@ -1,38 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasoclean/features/shop/controllers/checkout_controller.dart';
-import 'package:tasoclean/features/shop/screens/service_checkout/widgets/checkout_colors.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 import 'package:tasoclean/utils/constants/sizes.dart';
 
 class CheckoutNotesField extends StatelessWidget {
-  const CheckoutNotesField({super.key, required this.controller});
+  const CheckoutNotesField(
+      {super.key, required this.controller, this.dark = false});
 
   final TextEditingController controller;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(28),
-      borderSide: BorderSide(color: MColors.white.withValues(alpha: 0.15)),
+      borderSide: BorderSide(
+          color: dark
+              ? MColors.white.withValues(alpha: 0.15)
+              : MColors.black.withValues(alpha: 0.15)),
     );
     return TextField(
       controller: controller,
       minLines: 1,
       maxLines: 3,
       textCapitalization: TextCapitalization.sentences,
-      style: const TextStyle(color: MColors.white),
+      style: TextStyle(color: dark ? MColors.white : MColors.black),
       decoration: InputDecoration(
         hintText: 'Job description, gate code, areas to focus on...',
-        hintStyle: TextStyle(color: MColors.white.withValues(alpha: 0.45)),
+        hintStyle: TextStyle(
+            color: dark
+                ? MColors.white.withValues(alpha: 0.45)
+                : MColors.black.withValues(alpha: 0.45)),
         filled: true,
-        fillColor: checkoutDarkCard,
+        fillColor: dark
+            ? MColors.white.withValues(alpha: 0.07)
+            : MColors.black.withValues(alpha: 0.07),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         border: border,
         enabledBorder: border,
         focusedBorder: border.copyWith(
-          borderSide: const BorderSide(color: checkoutPeachLine, width: 1.6),
+          borderSide:
+              const BorderSide(color: MColors.peachLine, width: 1.6),
         ),
       ),
     );
@@ -40,22 +50,27 @@ class CheckoutNotesField extends StatelessWidget {
 }
 
 class CheckoutCreditsCard extends StatelessWidget {
-  const CheckoutCreditsCard({super.key, required this.controller});
+  const CheckoutCreditsCard(
+      {super.key, required this.controller, this.dark = false});
 
   final CheckoutController controller;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
       decoration: BoxDecoration(
-        color: checkoutDarkCard,
+        color: dark
+            ? MColors.white.withValues(alpha: 0.07)
+            : MColors.black.withValues(alpha: 0.07),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Obx(
         () => Column(
           children: [
             _ToggleRow(
+              dark: dark,
               title: 'Use App Credits?',
               amount: controller.appCredits.value,
               value: controller.useCredits.value,
@@ -64,6 +79,7 @@ class CheckoutCreditsCard extends StatelessWidget {
                   : null,
             ),
             _ToggleRow(
+              dark: dark,
               title: 'Use Wallet Balance?',
               amount: controller.walletBalance.value,
               value: controller.useWallet.value,
@@ -84,12 +100,14 @@ class _ToggleRow extends StatelessWidget {
     required this.amount,
     required this.value,
     required this.onChanged,
+    this.dark = false,
   });
 
   final String title;
   final double amount;
   final bool value;
   final ValueChanged<bool>? onChanged;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
@@ -105,14 +123,17 @@ class _ToggleRow extends StatelessWidget {
                 Text(
                   title,
                   style: textTheme.bodySmall?.copyWith(
-                    color: MColors.white,
+                    color: dark ? MColors.white : MColors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(width: MSizes.sm),
-                Text( formatKes(amount),
+                Text(
+                  formatKes(amount),
                   style: textTheme.bodyMedium?.copyWith(
-                    color: MColors.grey.withValues(alpha: 0.7),
+                    color: dark
+                        ? MColors.white.withValues(alpha: 0.7)
+                        : MColors.black.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -124,7 +145,9 @@ class _ToggleRow extends StatelessWidget {
           value: value,
           onChanged: onChanged,
           activeTrackColor: MColors.success,
-          inactiveTrackColor: MColors.white.withValues(alpha: 0.18),
+          inactiveTrackColor: dark
+              ? MColors.white.withValues(alpha: 0.18)
+              : MColors.black.withValues(alpha: 0.18),
           trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
           thumbColor: WidgetStateProperty.resolveWith(
             (states) => states.contains(WidgetState.selected)

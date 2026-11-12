@@ -13,7 +13,7 @@ class ServicesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ServiceController());
+    final controller = ServiceController.instance;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -24,8 +24,7 @@ class ServicesScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MAppBar(
-                    title: Text('Our Services',
-                        style: Theme.of(context).textTheme.headlineSmall!.apply(color: MColors.white)),
+                    title: Text('Our Services', style: Theme.of(context).textTheme.headlineSmall!.apply(color: MColors.white)),
                     showBackArrow: false,
                   ),
                   Padding(
@@ -45,14 +44,14 @@ class ServicesScreen extends StatelessWidget {
               child: Obx(() {
                 if (controller.isLoading.value) {
                   return const Padding(
-                    padding: EdgeInsets.all(32),
+                    padding: EdgeInsets.all(MSizes.spaceBtwSections),
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
 
                 if (controller.errorMessage.value != null) {
                   return Padding(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(MSizes.defaultSpace),
                     child: Column(
                       children: [
                         Text(controller.errorMessage.value!, textAlign: TextAlign.center),
@@ -65,7 +64,7 @@ class ServicesScreen extends StatelessWidget {
 
                 if (controller.categories.isEmpty) {
                   return const Padding(
-                    padding: EdgeInsets.all(32),
+                    padding: EdgeInsets.all(MSizes.spaceBtwSections),
                     child: Center(child: Text('No services available yet.')),
                   );
                 }
@@ -74,7 +73,7 @@ class ServicesScreen extends StatelessWidget {
                   children: [
                     for (var i = 0; i < controller.categories.length; i++)
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.only(bottom: MSizes.defaultSpace/2),
                         child: MServiceCard(
                           category: controller.categories[i],
                           onTap: () => Get.to(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tasoclean/features/shop/controllers/checkout_controller.dart' show formatAmount;
 import 'package:tasoclean/features/shop/screens/cart_controller.dart';
 import 'package:tasoclean/features/shop/screens/product_model.dart';
+import 'package:tasoclean/utils/constants/colors.dart';
 
 // Store palette (from the Taso Store mockup)
 const kStoreBg = Color(0xFF0F0F10);
@@ -44,9 +45,10 @@ class ProductImage extends StatelessWidget {
 // Cart icon with live count badge
 // ─────────────────────────────────────────────────────────────
 class CartBadgeButton extends StatelessWidget {
-  const CartBadgeButton({super.key, required this.onTap});
+  const CartBadgeButton({super.key, required this.onTap, this.dark = false});
 
   final VoidCallback onTap;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class CartBadgeButton extends StatelessWidget {
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [
-            const Icon(Icons.shopping_cart_outlined, color: Colors.white, size: 30),
+             Icon(Icons.shopping_cart_outlined, color: dark ? Colors.white : Colors.black, size: 30),
             Positioned(
               top: 2,
               right: 0,
@@ -92,16 +94,17 @@ class CartBadgeButton extends StatelessWidget {
 // − n + stepper
 // ─────────────────────────────────────────────────────────────
 class QtyStepper extends StatelessWidget {
-  const QtyStepper({super.key, required this.quantity, required this.onAdd, required this.onRemove});
+  const QtyStepper({super.key, required this.quantity, required this.onAdd, required this.onRemove, this.dark = false});
 
   final int quantity;
   final VoidCallback onAdd;
   final VoidCallback onRemove;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
     Widget btn(IconData icon, VoidCallback onTap, {bool filled = false}) => Material(
-          color: filled ? kStoreTan : Colors.white.withValues(alpha: 0.1),
+          color: filled ? MColors.peach : dark ? MColors.darkCard : MColors.black.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(10),
           child: InkWell(
             onTap: onTap,
@@ -109,7 +112,7 @@ class QtyStepper extends StatelessWidget {
             child: SizedBox(
               width: 36,
               height: 36,
-              child: Icon(icon, size: 20, color: filled ? Colors.black : Colors.white),
+              child: Icon(icon, size: 20, color: filled ? Colors.black : dark ? Colors.white : Colors.black),
             ),
           ),
         );
@@ -123,7 +126,7 @@ class QtyStepper extends StatelessWidget {
           child: Text(
             '$quantity',
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),
+            style: TextStyle(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700, fontSize: 16),
           ),
         ),
         btn(Icons.add, onAdd, filled: true),
@@ -136,8 +139,9 @@ class QtyStepper extends StatelessWidget {
 // "Add to Cart" from a product card:
 // single variant -> add straight away, several -> pick a size first
 // ─────────────────────────────────────────────────────────────
-void addToCartFromCard(BuildContext context, ProductModel product) {
-  final variants = product.publishedVariants;
+void addToCartFromCard(BuildContext context, ProductModel product, {required bool dark}) {
+  final variants = product.publishedVariants; 
+  
 
   if (variants.length == 1) {
     CartsController.instance.add(product, variants.first);
@@ -149,23 +153,24 @@ void addToCartFromCard(BuildContext context, ProductModel product) {
       duration: const Duration(seconds: 1),
     );
   } else {
-    showVariantSheet(context, product);
+    showVariantSheet(context, product, dark: dark);
   }
 }
 
-void showVariantSheet(BuildContext context, ProductModel product) {
+void showVariantSheet(BuildContext context, ProductModel product, {required bool dark}) {
   showModalBottomSheet(
     context: context,
-    backgroundColor: kStoreCard,
+    backgroundColor: dark ? MColors.black : MColors.white,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
-    builder: (_) => _VariantSheet(product: product),
+    builder: (_) => _VariantSheet(product: product, dark: dark),
   );
 }
 
 class _VariantSheet extends StatelessWidget {
-  const _VariantSheet({required this.product});
+  const _VariantSheet({required this.product, required this.dark});
   final ProductModel product;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
@@ -186,15 +191,15 @@ class _VariantSheet extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.25),
+                    color: dark ? Colors.white.withValues(alpha: 0.25) : Colors.black.withValues(alpha: 0.25),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              Text(product.name, style: t.titleMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
+              Text(product.name, style: t.titleMedium?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
               const SizedBox(height: 4),
-              Text('Choose a size', style: t.bodySmall?.copyWith(color: Colors.white60)),
+              Text('Choose a size', style: t.bodySmall?.copyWith(color: dark ? Colors.white60 : Colors.black54)),
               const SizedBox(height: 12),
               Flexible(
                 child: ListView(
@@ -206,7 +211,7 @@ class _VariantSheet extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(14, 10, 10, 10),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.05),
+                            color: dark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(color: kStoreBorder),
                           ),
@@ -217,9 +222,9 @@ class _VariantSheet extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(v.label,
-                                        style: t.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w600)),
+                                        style: t.titleSmall?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w600)),
                                     Text('KSh ${formatAmount(v.price)}',
-                                        style: t.bodySmall?.copyWith(color: kStoreTan, fontWeight: FontWeight.w700)),
+                                        style: t.bodySmall?.copyWith(color: dark ? Colors.white : Colors.black, fontWeight: FontWeight.w700)),
                                   ],
                                 ),
                               ),
@@ -229,8 +234,8 @@ class _VariantSheet extends StatelessWidget {
                                   return ElevatedButton(
                                     onPressed: () => cart.add(product, v),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: kStoreTan,
-                                      foregroundColor: Colors.black,
+                                      backgroundColor: MColors.peach,
+                                      foregroundColor:  Colors.black,
                                       elevation: 0,
                                       shape: const StadiumBorder(),
                                     ),
@@ -238,6 +243,7 @@ class _VariantSheet extends StatelessWidget {
                                   );
                                 }
                                 return QtyStepper(
+                                  dark: dark,
                                   quantity: q,
                                   onAdd: () => cart.add(product, v),
                                   onRemove: () => cart.decrement(CartsController.keyOf(product.docId, v.name)),
@@ -253,7 +259,7 @@ class _VariantSheet extends StatelessWidget {
               const SizedBox(height: 6),
               SizedBox(
                 width: double.infinity,
-                height: 48,
+                height: 52,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   style: ElevatedButton.styleFrom(

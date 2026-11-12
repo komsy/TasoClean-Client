@@ -26,11 +26,13 @@ class MServiceBottomBar extends StatefulWidget {
     required this.services,
     required this.total,
     required this.onNext,
+    required this.dark,
   });
   final int items;
   final int services;
   final num total;
   final VoidCallback? onNext;
+  final bool dark;
 
   @override
   State<MServiceBottomBar> createState() => MServiceBottomBarState();
@@ -42,9 +44,9 @@ class MServiceBottomBarState extends State<MServiceBottomBar> {
     final t = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
-        color: MColors.darkBar,
+        color:widget.dark ? MColors.darkBar : MColors.white,
         border: Border(
-            top: BorderSide(color: Colors.white.withValues(alpha: 0.08))),
+            top: BorderSide(color: widget.dark ? Colors.white.withValues(alpha: 0.08) : Colors.black.withValues(alpha: 0.08))),
       ),
       child: SafeArea(
         top: false,
@@ -60,12 +62,12 @@ class MServiceBottomBarState extends State<MServiceBottomBar> {
                     Text(
                       '${widget.items} ${widget.items == 1 ? 'item' : 'items'} · ${widget.services} ${widget.services == 1 ? 'service' : 'services'}',
                       style: t.bodySmall?.copyWith(
-                          color: MColors.white.withValues(alpha: 0.7)),
+                          color:widget.dark ?  MColors.white.withValues(alpha: 0.7) : MColors.black.withValues(alpha: 0.7),),
                     ),
                     const SizedBox(height: 2),
                     Text(_kes(widget.total),
                         style: t.titleLarge?.copyWith(
-                            color: MColors.white, fontWeight: FontWeight.w700)),
+                            color: widget.dark ? MColors.white : MColors.black, fontWeight: FontWeight.w700)),
                   ],
                 ),
               ),

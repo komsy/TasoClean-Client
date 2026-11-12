@@ -18,11 +18,13 @@ class MCategoryStrip extends StatefulWidget {
     required this.selected,
     required this.badgeFor,
     required this.onSelect,
+    required this.dark,
   });
   final List<ServiceCategoryModel> categories;
   final int selected;
   final int Function(ServiceCategoryModel) badgeFor;
   final ValueChanged<int> onSelect;
+  final bool dark;
 
   @override
   State<MCategoryStrip> createState() => _MCategoryStripState();
@@ -53,12 +55,12 @@ class _MCategoryStripState extends State<MCategoryStrip> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
                   decoration: BoxDecoration(
-                    color: isSel ? MColors.peach : MColors.darkCard,
+                    color: isSel ? MColors.peach :   widget.dark ? MColors.darkCard : MColors.black.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: isSel
                           ? MColors.peachBorder
-                          : Colors.white.withValues(alpha: 0.08),
+                          : widget.dark ? Colors.white.withValues(alpha: 0.08) : Colors.black.withValues(alpha: 0.08),
                       width: 2,
                     ),
                   ),
@@ -67,7 +69,7 @@ class _MCategoryStripState extends State<MCategoryStrip> {
                     children: [
                       Icon(serviceCategoryIcon(c.categoryName),
                           size: 24,
-                          color: isSel ? MColors.black : MColors.peach),
+                          color: isSel ? MColors.black :  widget.dark ? MColors.peach : MColors.black),
                       const SizedBox(height: 6),
                       Text(
                         c.categoryName,
@@ -75,7 +77,7 @@ class _MCategoryStripState extends State<MCategoryStrip> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: isSel ? MColors.black : MColors.peach,
+                              color: isSel ? MColors.black :  widget.dark ? MColors.peach : MColors.black,
                               fontWeight: FontWeight.w600,
                               height: 1.15,
                             ),
@@ -95,7 +97,7 @@ class _MCategoryStripState extends State<MCategoryStrip> {
                           color: MColors.error, shape: BoxShape.circle),
                       child: Text('$badge',
                           style: const TextStyle(
-                              color: Colors.white,
+                              color:  Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w700)),
                     ),

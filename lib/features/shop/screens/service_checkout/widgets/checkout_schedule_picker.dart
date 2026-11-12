@@ -5,19 +5,20 @@ import 'package:tasoclean/features/shop/screens/service_checkout/widgets/checkou
 import 'package:tasoclean/utils/constants/colors.dart';
 
 class CheckoutSchedulePicker extends StatelessWidget {
-  const CheckoutSchedulePicker({super.key, required this.controller});
+  const CheckoutSchedulePicker({super.key, required this.controller, this.dark = false});
 
   final CheckoutController controller;
+  final bool dark;
 
   void _open(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: checkoutBar,
+      backgroundColor: dark ? MColors.black : MColors.white,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
-      builder: (_) => _ScheduleSheet(controller: controller),
+      builder: (_) => _ScheduleSheet(controller: controller, dark: dark),
     );
   }
 
@@ -30,12 +31,12 @@ class CheckoutSchedulePicker extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: checkoutPeachLine, width: 1.6),
+          border: Border.all(color: MColors.peachLine, width: 1.6),
         ),
         child: Row(
           children: [
-            const Icon(Icons.calendar_month_outlined,
-                color: MColors.white, size: 22),
+            Icon(Icons.calendar_month_outlined,
+                color: dark ? MColors.white : MColors.black, size: 22),
             const SizedBox(width: 6),
             // const Icon(Icons.schedule, color: MColors.white, size: 22),
             // const SizedBox(width: 12),
@@ -45,13 +46,13 @@ class CheckoutSchedulePicker extends StatelessWidget {
                   controller.whenLabel,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: MColors.white,
+                        color: dark ? MColors.white : MColors.black,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
               ),
             ),
-            const Icon(Icons.keyboard_arrow_down, color: MColors.white),
+            Icon(Icons.keyboard_arrow_down, color: dark ? MColors.white : MColors.black),
           ],
         ),
       ),
@@ -60,9 +61,10 @@ class CheckoutSchedulePicker extends StatelessWidget {
 }
 
 class _ScheduleSheet extends StatelessWidget {
-  const _ScheduleSheet({required this.controller});
+  const _ScheduleSheet({required this.controller, this.dark = false});
 
   final CheckoutController controller;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _ScheduleSheet extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: MColors.white.withValues(alpha: 0.25),
+                    color: dark ? MColors.white.withValues(alpha: 0.25) : MColors.black.withValues(alpha: 0.25),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -92,7 +94,7 @@ class _ScheduleSheet extends StatelessWidget {
               Text(
                 'Pick a day',
                 style: textTheme.titleSmall?.copyWith(
-                  color: MColors.white,
+                  color: dark ? MColors.white : MColors.black,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -112,7 +114,7 @@ class _ScheduleSheet extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         width: 58,
                         decoration: BoxDecoration(
-                          color: isSelected ? MColors.peach : checkoutDarkCard,
+                          color: isSelected ? MColors.peach : dark ? MColors.white.withValues(alpha: 0.07) : MColors.black.withValues(alpha: 0.07),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Column(
@@ -123,7 +125,7 @@ class _ScheduleSheet extends StatelessWidget {
                               style: textTheme.labelSmall?.copyWith(
                                 color: isSelected
                                     ? MColors.black
-                                    : MColors.white.withValues(alpha: 0.7),
+                                    : dark ? MColors.white.withValues(alpha: 0.7) : MColors.black.withValues(alpha: 0.7),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -131,7 +133,7 @@ class _ScheduleSheet extends StatelessWidget {
                               '${date.day}',
                               style: textTheme.titleMedium?.copyWith(
                                 color:
-                                    isSelected ? MColors.black : MColors.white,
+                                    isSelected ? MColors.black : dark ? MColors.white : MColors.black,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -140,7 +142,7 @@ class _ScheduleSheet extends StatelessWidget {
                               style: textTheme.labelSmall?.copyWith(
                                 color: isSelected
                                     ? MColors.black
-                                    : MColors.white.withValues(alpha: 0.7),
+                                    : dark ? MColors.white.withValues(alpha: 0.7) : MColors.black.withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -154,7 +156,7 @@ class _ScheduleSheet extends StatelessWidget {
               Text(
                 'Pick a time',
                 style: textTheme.titleSmall?.copyWith(
-                  color: MColors.white,
+                  color: dark ? MColors.white : MColors.black,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -175,7 +177,7 @@ class _ScheduleSheet extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: index == selectedSlot
                               ? MColors.peach
-                              : checkoutDarkCard,
+                              : dark ? MColors.white.withValues(alpha: 0.07) : MColors.black.withValues(alpha: 0.07),
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Text(
@@ -183,7 +185,7 @@ class _ScheduleSheet extends StatelessWidget {
                           style: textTheme.bodyMedium?.copyWith(
                             color: index == selectedSlot
                                 ? MColors.black
-                                : MColors.white,
+                                : dark ? MColors.white : MColors.black,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -194,7 +196,7 @@ class _ScheduleSheet extends StatelessWidget {
               const SizedBox(height: 22),
               SizedBox(
                 width: double.infinity,
-                height: 48,
+                height: 54,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   style: ElevatedButton.styleFrom(

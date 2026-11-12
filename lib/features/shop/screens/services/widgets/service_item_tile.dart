@@ -27,12 +27,14 @@ class MServiceItemTile extends StatefulWidget {
     required this.quantity,
     required this.onAdd,
     required this.onRemove,
+    required this.dark,
   });
 
   final ServiceModel service;
   final int quantity;
   final VoidCallback onAdd;
   final VoidCallback onRemove;
+  final bool dark;
 
   @override
   State<MServiceItemTile> createState() => _MServiceItemTileState();
@@ -105,8 +107,8 @@ class _MServiceItemTileState extends State<MServiceItemTile> {
           _RoundButton(
               icon: Icons.add,
               onTap: widget.onAdd,
-              background: MColors.dark,
-              foreground: MColors.white),
+              background:widget.dark ? MColors.dark : MColors.white,
+              foreground: widget.dark ? MColors.white : MColors.black),
         ],
       ),
     );

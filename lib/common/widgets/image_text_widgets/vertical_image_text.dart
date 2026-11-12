@@ -30,7 +30,7 @@ class MVerticalImagetext extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(right: MSizes.spaceBtwItems),
+        padding: const EdgeInsets.only(right: MSizes.spaceBtwSections),
         child: Column(
           children: [
             //Circular Icon
@@ -61,12 +61,12 @@ class MVerticalImagetext extends StatelessWidget {
 
             //Text
             SizedBox(
-              width: 55,
+              width: 95,
               child: Text(
                 title,
                 style: Theme.of(context)
                     .textTheme
-                    .labelMedium!
+                    .labelSmall!
                     .apply(color: textColor),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

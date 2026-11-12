@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasoclean/features/shop/controllers/checkout_controller.dart';
 import 'package:tasoclean/features/shop/screens/service_checkout/widgets/booking_success.dart';
-import 'package:tasoclean/features/shop/screens/service_checkout/widgets/checkout_colors.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 
 class CheckoutSummaryBar extends StatelessWidget {
-  const CheckoutSummaryBar({super.key, required this.controller});
+  const CheckoutSummaryBar({super.key, required this.controller, this.dark = false});
 
   final CheckoutController controller;
+  final bool dark;
 
   Future<void> _pay() async {
     final summary = await controller.placeBooking();
@@ -22,7 +22,7 @@ class CheckoutSummaryBar extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
-      color: checkoutBar,
+      color: dark ? MColors.white.withValues(alpha: 0.07) : MColors.black.withValues(alpha: 0.07),
       child: SafeArea(
         top: false,
         child: Obx(() {
@@ -35,6 +35,7 @@ class CheckoutSummaryBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _SummaryRow(
+                dark: dark,
                 label:
                     'Deposit required (${(CheckoutController.depositRate * 100).round()}%):',
                 value: formatKes(controller.deposit),
@@ -42,10 +43,12 @@ class CheckoutSummaryBar extends StatelessWidget {
               ),
               if (applied < 0) ...[
                 _SummaryRow(
+                dark: dark,
                   label: 'Credits & wallet',
                   value: '- ${formatKes(applied)}',
                 ),
                 _SummaryRow(
+                dark: dark,
                   label: 'Pay now:',
                   value: formatKes(controller.payNow),
                   bold: true,
@@ -53,7 +56,7 @@ class CheckoutSummaryBar extends StatelessWidget {
               ],
               Container(
                 height: 1.2,
-                color: checkoutPeachLine.withValues(alpha: 0.7),
+                color: MColors.peachLine.withValues(alpha: 0.7),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
@@ -67,13 +70,13 @@ class CheckoutSummaryBar extends StatelessWidget {
                           Text(
                             'Total',
                             style: textTheme.bodySmall?.copyWith(
-                              color: MColors.white.withValues(alpha: 0.6),
+                              color: dark ? MColors.white.withValues(alpha: 0.6) : MColors.black.withValues(alpha: 0.6),
                             ),
                           ),
                           Text(
                             formatKes(total),
                             style: textTheme.headlineSmall?.copyWith(
-                              color: MColors.white,
+                              color: dark ? MColors.white : MColors.black,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
@@ -82,7 +85,7 @@ class CheckoutSummaryBar extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 190,
-                      height: 52,
+                      height: 54,
                       child: ElevatedButton(
                         onPressed: canPay ? _pay : null,
                         style: ElevatedButton.styleFrom(
@@ -129,24 +132,26 @@ class _SummaryRow extends StatelessWidget {
     required this.label,
     required this.value,
     this.bold = false,
+    this.dark = false,  
   });
 
   final String label;
   final String value;
   final bool bold;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final style = (bold ? textTheme.titleMedium : textTheme.bodyLarge)?.copyWith(
-      color: MColors.white,
+      color: dark ? MColors.white : MColors.black,
       fontWeight: bold ? FontWeight.w700 : FontWeight.w400,
     );
     return Container(
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: checkoutPeachLine.withValues(alpha: 0.7),
+            color: MColors.peachLine.withValues(alpha: 0.7),
             width: 1.2,
           ),
         ),

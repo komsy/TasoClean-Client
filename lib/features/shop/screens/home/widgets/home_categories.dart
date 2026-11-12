@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasoclean/common/widgets/shimmers/category_shimmer.dart';
-import 'package:tasoclean/features/shop/controllers/category_controller.dart';
-import 'package:tasoclean/features/shop/screens/sub_category/sub_categories.dart';
-
+import 'package:tasoclean/features/shop/controllers/service_controller.dart';
+import 'package:tasoclean/features/shop/screens/services/widgets/service_list.dart';
 import '../../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
 
 class MHomeCategories extends StatelessWidget {
@@ -13,14 +12,14 @@ class MHomeCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryController = Get.put(CategoryController());
+    final categoryController = Get.put(ServiceController());
 
     return Obx(() {
       if (categoryController.isLoading.value) {
         return const MCategoryShimmerEffect();
       }
 
-      if (categoryController.featuredCategories.isEmpty) {
+      if (categoryController.categories.isEmpty) {
         return Center(
             child: Text('No Data Found!',
                 style: Theme.of(context)
@@ -32,17 +31,22 @@ class MHomeCategories extends StatelessWidget {
         height: 80,
         child: ListView.builder(
           shrinkWrap: true,
-          itemCount: categoryController.featuredCategories.length,
+          itemCount: categoryController.categories.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) {
-            final category = categoryController.featuredCategories[index];
+            final category = categoryController.categories[index];
 
             return MVerticalImagetext(
               isNetworkImage: true,
-              image: category.image,
-              title: category.name,
+              image: 'Null',
+              title: category.categoryName,
               onTap: () =>
-                  Get.to(() => SubCategoriesScreen(category: category)),
+                Get.to(
+                  () => BookServiceScreen(
+                    categories: categoryController.categories.toList(),
+                    initialCategory: index,
+                  ),
+                ),
             );
           },
         ),
