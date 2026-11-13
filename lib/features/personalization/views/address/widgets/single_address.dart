@@ -5,9 +5,6 @@ import 'package:tasoclean/features/personalization/controllers/address_controlle
 import 'package:tasoclean/features/personalization/models/address_model.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 import 'package:tasoclean/utils/constants/sizes.dart';
-import 'package:tasoclean/utils/helpers/helper_functions.dart';
-
-import '../../../../../common/widgets/containers/rounded_container.dart';
 
 class MSingleAddress extends StatelessWidget {
   const MSingleAddress({super.key, required this.address, required this.onTap});
@@ -17,61 +14,29 @@ class MSingleAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
     final controller = AddressController.instance;
 
     return Obx(() {
-      final selectedAddressId = controller.selectedAddress.value.id;
-      final selectedAddress = selectedAddressId == address.id;
-
-      return InkWell(
-        onTap: onTap,
-        child: MRoundedContainer(
-          showBorder: true,
-          padding: const EdgeInsets.all(MSizes.md),
-          width: double.infinity,
-          backgroundColor: selectedAddress
-              ? MColors.primary.withOpacity(0.5)
-              : Colors.transparent,
-          borderColor: selectedAddress
-              ? Colors.transparent
-              : dark
-                  ? MColors.darkerGrey
-                  : MColors.grey,
-          margin: const EdgeInsets.only(bottom: MSizes.spaceBtwItems),
-          child: Stack(
-            children: [
-              Positioned(
-                right: 5,
-                top: 0,
-                child: Icon(selectedAddress ? Iconsax.tick_circle5 : null,
-                    color: selectedAddress
-                        ? dark
-                            ? MColors.light
-                            : MColors.dark
-                        : null),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    address.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: MSizes.sm / 2),
-                  Text(address.formattedPhoneNo,
-                      maxLines: 1, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: MSizes.sm / 2),
-                  Text(
-                    address.toString(),
-                    softWrap: true,
-                  ),
-                ],
-              )
-            ],
+      final selected = controller.selectedAddress.value?.id == address.id;
+      return Card(
+        margin: const EdgeInsets.only(bottom: MSizes.spaceBtwItems),
+        color: selected ? MColors.primary.withValues(alpha: 0.12) : null,
+        child: ListTile(
+          onTap: onTap,
+          leading: Icon(
+            selected ? Iconsax.location_tick5 : Iconsax.location,
+            color: MColors.primary,
           ),
+          title: Text(address.label),
+          subtitle: Text(
+            [
+              address.fullAddress,
+              if (address.details.trim().isNotEmpty) address.details.trim(),
+            ].where((line) => line.isNotEmpty).join('\n'),
+          ),
+          trailing: address.isDefault
+              ? const Chip(label: Text('Default'))
+              : const Icon(Iconsax.arrow_right_3),
         ),
       );
     });

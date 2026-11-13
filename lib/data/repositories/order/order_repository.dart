@@ -1,42 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:tasoclean/data/repositories/authentication/authentication_repository.dart';
 import 'package:tasoclean/features/shop/models/order_model.dart';
 
 class OrderRepository extends GetxController {
   static OrderRepository get instance => Get.find();
 
-  //Variables
-  final _db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  //Get all order related to current user
-  Future<List<OrderModel>> fetchUserOrders() async {
+  static const String _bookings = 'Bookings';
+  static const String _productOrders = 'ProductOrders';
+
+  String _uid() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) throw 'Please sign in to see your orders.';
+    return user.uid;
+  }
+
+  // Sorted on the device (newest first) so no composite index is needed.
+  int _newestFirst(DateTime? a, DateTime? b) =>
+      (b ?? DateTime.fromMillisecondsSinceEpoch(0)).compareTo(a ?? DateTime.fromMillisecondsSinceEpoch(0));
+
+  Future<List<BookingModel>> getServiceBookings() async {
     try {
-      final userId = AuthenticationRepository.instance.authUser!.uid;
-      if (userId.isEmpty) {
-        throw 'Unable to find user information. Try again in few minutes.';
-      }
-
-      final result =
-          await _db.collection('Users').doc(userId).collection('Orders').get();
-      return result.docs
-          .map((documentSnapshot) => OrderModel.fromSnapshot(documentSnapshot))
-          .toList();
-    } catch (e) {
-      throw 'Something went wrong while fetching Order Information. Please try again later';
+      final snap = await _db.collection(_bookings).where('userId', isEqualTo: _uid()).get();
+      return snap.docs.map(BookingModel.fromSnapshot).toList()
+        ..sort((a, b) => _newestFirst(a.createdAt, b.createdAt));
+    } on FirebaseException catch (e) {
+      throw 'Firebase error: ${e.message ?? e.code}';
     }
   }
 
-  //Store new user order
-  Future<void> saveOrder(OrderModel order, String userId) async {
+  Future<List<ProductOrderModel>> getProductOrders() async {
     try {
-      await _db
-          .collection('Users')
-          .doc(userId)
-          .collection('Orders')
-          .add(order.toJson());
-    } catch (e) {
-      throw 'Something went wrongwhile saving Order Information. Please try again later';
+      final snap = await _db.collection(_productOrders).where('userId', isEqualTo: _uid()).get();
+      return snap.docs.map(ProductOrderModel.fromSnapshot).toList()
+        ..sort((a, b) => _newestFirst(a.createdAt, b.createdAt));
+    } on FirebaseException catch (e) {
+      throw 'Firebase error: ${e.message ?? e.code}';
     }
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tasoclean/common/widgets/custom_shapes/containers/primary_header_containers.dart';
 import 'package:tasoclean/common/widgets/texts/section_heading.dart';
-import 'package:tasoclean/features/shop/controllers/products/product_controller.dart';
 import 'package:tasoclean/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:tasoclean/features/shop/screens/home/widgets/home_promotional_sections.dart';
 import 'package:tasoclean/utils/constants/image_strings.dart';
@@ -15,7 +13,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProductController());
 
     return Scaffold(
       body: SingleChildScrollView(

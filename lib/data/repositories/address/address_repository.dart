@@ -22,26 +22,34 @@ class AddressRepository extends GetxController {
           .collection('Addresses')
           .get();
       return result.docs
-          .map((documentSnapshot) =>
-              AddressModel.fromDocumentSnapshot(documentSnapshot))
+          .map(AddressModel.fromSnapshot)
           .toList();
     } catch (e) {
-      throw 'Something went wrong while fetching Address Information. Please try again later';
+      throw Exception(
+        'Something went wrong while fetching address information. Please try again later. $e',
+      );
     }
   }
 
-  //Clear the selecte field for all addresses
-  Future<void> updateSelectedField(String addressId, bool selected) async {
+  Future<void> setDefaultAddress(String addressId) async {
     try {
       final userId = AuthenticationRepository.instance.authUser!.uid;
-      await _db
+      final addresses = _db
           .collection('Users')
           .doc(userId)
-          .collection('Addresses')
-          .doc(addressId)
-          .update({'SelectedAddress': selected});
+          .collection('Addresses');
+      final snapshot = await addresses.get();
+      final batch = _db.batch();
+
+      for (final document in snapshot.docs) {
+        batch.update(document.reference, {'isDefault': document.id == addressId});
+      }
+
+      await batch.commit();
     } catch (e) {
-      throw 'Unable to update your address selection. Please try again later';
+      throw Exception(
+        'Unable to update your default address. Please try again later. $e',
+      );
     }
   }
 
@@ -53,10 +61,12 @@ class AddressRepository extends GetxController {
           .collection('Users')
           .doc(userId)
           .collection('Addresses')
-          .add(address.toJson());
+          .add(address.toMap());
       return currentAddress.id;
     } catch (e) {
-      throw 'Something went wrong while saving Address Information. Please try again later';
+      throw Exception(
+        'Something went wrong while saving address information. Please try again later. $e',
+      );
     }
   }
 }

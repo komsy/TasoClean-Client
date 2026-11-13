@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasoclean/common/widgets/appbar/appbar.dart';
-import 'package:tasoclean/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:tasoclean/common/widgets/shimmers/shimmer.dart';
 import 'package:tasoclean/features/personalization/controllers/user_controllers.dart';
+import 'package:tasoclean/features/shop/screens/cart/cart_screen.dart';
+import 'package:tasoclean/features/shop/screens/store/product_widgets.dart';
 import 'package:tasoclean/utils/constants/colors.dart';
 import 'package:tasoclean/utils/constants/text_strings.dart';
 
@@ -32,7 +33,7 @@ class MHomeAppBar extends StatelessWidget {
           }),
         ],
       ),
-      actions: const [MCartCounterIcon(iconColor: MColors.white),MCartCounterIcon(iconColor: MColors.white)],
+      actions: [CartBadgeButton(onTap: () => Get.to(() => const MCartScreen()))],
     );
   }
 }
